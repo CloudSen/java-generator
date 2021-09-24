@@ -1,6 +1,7 @@
 package com.yangyunsen.generator.java.dbloader;
 
 import com.yangyunsen.generator.java.dbloader.module.DatabaseInfo;
+import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -35,7 +36,7 @@ public interface DatabaseLoader {
      * @param tableNames 表名（大小写敏感）
      * @return 表信息 key: 表名  value: 表字段信息
      */
-    Map<String, List<ColumnInfo>> getMultiTableInfo(List<String> tableNames);
+    Map<String, List<OracleColumnInfo>> getMultiTableInfo(List<String> tableNames);
 
     /**
      * 获取表主键信息MAP
@@ -59,5 +60,5 @@ public interface DatabaseLoader {
      * @return 字段富信息
      * @throws SQLException sql执行错误
      */
-    List<ColumnInfo> getColumnNameAndType(Connection connection, String sql, String tableNameStr, Map<String, String> pkColumnMap) throws SQLException;
+    List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql, String tableNameStr, Map<String, String> pkColumnMap) throws SQLException;
 }
