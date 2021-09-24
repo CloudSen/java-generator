@@ -42,7 +42,7 @@ class OracleDatabaseLoaderTest {
     @Test
     @DisplayName("Oracle数据库信息加载器——获取单个表信息")
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    void getMultiTableInfo() {
+    void getOneTableInfo() {
         Assertions.assertDoesNotThrow(() -> {
             DatabaseInfo databaseInfo = new DatabaseInfo()
                 .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
@@ -56,6 +56,27 @@ class OracleDatabaseLoaderTest {
             Assertions.assertEquals(3, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());
             Assertions.assertEquals(1, tableColumnsMap.values().stream().flatMap(Collection::stream).filter(c -> BooleanUtils.isTrue(c.getPkFlag())).count());
             Assertions.assertEquals("UNIQUE_ID", tableColumnsMap.values().stream().flatMap(Collection::stream).filter(c -> BooleanUtils.isTrue(c.getPkFlag())).findFirst().map(OracleColumnInfo::getColumnName).get());
+        });
+    }
+
+    @Test
+    @DisplayName("Oracle数据库信息加载器——获取多个表信息")
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    void getMultiTableInfo() {
+        Assertions.assertDoesNotThrow(() -> {
+            DatabaseInfo databaseInfo = new DatabaseInfo()
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUsername("CQDX_JXGLXX")
+                .setPasswd("cquisse")
+                .setDriverClassName(JdbcDriverClass.ORACLE);
+            DatabaseLoader databaseLoader = new OracleDatabaseLoader(databaseInfo);
+            Map<String, List<OracleColumnInfo>> tableColumnsMap = databaseLoader.getMultiTableInfo(List.of("TEST_GENERATOR", "TEST_GENERATOR2"));
+            Assertions.assertNotNull(tableColumnsMap);
+            Assertions.assertEquals(2, tableColumnsMap.keySet().size());
+            Assertions.assertEquals(6, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());
+            Assertions.assertEquals(2, tableColumnsMap.values().stream().flatMap(Collection::stream).filter(c -> BooleanUtils.isTrue(c.getPkFlag())).count());
+            Assertions.assertEquals("UNIQUE_ID", tableColumnsMap.get("TEST_GENERATOR").stream().filter(c -> BooleanUtils.isTrue(c.getPkFlag())).findFirst().map(OracleColumnInfo::getColumnName).get());
+            Assertions.assertEquals("UNIQUE_ID", tableColumnsMap.get("TEST_GENERATOR2").stream().filter(c -> BooleanUtils.isTrue(c.getPkFlag())).findFirst().map(OracleColumnInfo::getColumnName).get());
         });
     }
 }
