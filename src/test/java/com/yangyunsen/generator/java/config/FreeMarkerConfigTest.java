@@ -1,7 +1,6 @@
-package com.yangyunsen.generator.java;
+package com.yangyunsen.generator.java.config;
 
-import com.yangyunsen.generator.java.config.FreeMarkerManager;
-import com.yangyunsen.generator.java.dbloader.oracle.OracleTableInfo;
+import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -41,7 +40,7 @@ public class FreeMarkerConfigTest {
         Configuration fmc = FreeMarkerManager.getConfig();
         Template temp = fmc.getTemplate("test.ftl");
         Writer out = new OutputStreamWriter(System.out);
-        OracleTableInfo table = new OracleTableInfo().setTableName("test");
+        OracleColumnInfo table = new OracleColumnInfo().setTableName("test");
         temp.process(table, out);
     }
 }

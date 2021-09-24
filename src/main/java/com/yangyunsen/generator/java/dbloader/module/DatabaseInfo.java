@@ -1,5 +1,6 @@
-package com.yangyunsen.generator.java.dbloader.common;
+package com.yangyunsen.generator.java.dbloader.module;
 
+import com.yangyunsen.generator.java.common.JdbcDriverClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class DatabaseInfo implements Serializable {
     private String url;
     private String username;
     private String passwd;
-    private String driverClassName;
+    private JdbcDriverClass driverClassName;
 }

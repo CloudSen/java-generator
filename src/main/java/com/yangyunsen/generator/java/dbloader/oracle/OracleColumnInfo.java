@@ -1,5 +1,6 @@
 package com.yangyunsen.generator.java.dbloader.oracle;
 
+import com.yangyunsen.generator.java.dbloader.ColumnInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,13 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class OracleTableInfo implements Serializable {
+public class OracleColumnInfo implements Serializable, ColumnInfo {
 
     private String tableName;
     private String columnName;
     private String dataType;
-    private String dataLength;
-    private String dataPrecision;
-    private String dataScale;
+    private Integer dataLength;
+    private Integer dataPrecision;
+    private Integer dataScale;
+    private Boolean pkFlag;
 }

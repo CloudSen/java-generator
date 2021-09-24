@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.dbloader.common;
+package com.yangyunsen.generator.java.dbloader.module;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
