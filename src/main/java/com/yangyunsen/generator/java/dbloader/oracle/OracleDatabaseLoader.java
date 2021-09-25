@@ -35,16 +35,16 @@ public class OracleDatabaseLoader implements DatabaseLoader {
             "FROM USER_TAB_COLUMNS t\n" +
             "WHERE t.TABLE_NAME IN (?)";
 
-    private static final String GET_TABLE_PRIMARY_KEY_SQL = "SELECT\n" +
-            "    cols.TABLE_NAME \"tableName\",\n" +
-            "    cols.COLUMN_NAME \"pkColumnName\"\n" +
-            "FROM ALL_CONSTRAINTS cons, ALL_CONS_COLUMNS cols\n" +
-            "WHERE cols.TABLE_NAME IN (?)\n" +
-            "AND cons.CONSTRAINT_TYPE = 'p'\n" +
-            "AND cons.OWNER = ?\n" +
-            "AND cons.CONSTRAINT_NAME = cols.CONSTRAINT_NAME\n" +
-            "AND cons.OWNER = cols.OWNER\n" +
-            "ORDER BY cols.TABLE_NAME, cols.position";
+    private static final String GET_TABLE_PRIMARY_KEY_SQL = "SELECT \n" +
+        "\tcols.TABLE_NAME \"tableName\",\n" +
+        "\tcols.COLUMN_NAME \"pkColumnName\"\n" +
+        "FROM ALL_CONSTRAINTS cons, ALL_CONS_COLUMNS cols\n" +
+        "WHERE cols.TABLE_NAME IN (?)\n" +
+        "AND cons.CONSTRAINT_TYPE = 'P'\n" +
+        "AND cons.OWNER = ?\n" +
+        "AND cons.CONSTRAINT_NAME = cols.CONSTRAINT_NAME\n" +
+        "AND cons.OWNER = cols.OWNER\n" +
+        "ORDER BY cols.TABLE_NAME, cols.POSITION";
 
     @Override
     public Map<String, List<OracleColumnInfo>> getMultiTableInfo(List<String> tableNames) {
@@ -52,7 +52,7 @@ public class OracleDatabaseLoader implements DatabaseLoader {
         if (invalidParams) {
             throw new GeneratorException("用户名或表名列表为空");
         }
-        String placeHolders = String.join(",", Collections.nCopies(tableNames.size(), "'?'"));
+        String placeHolders = String.join(",", Collections.nCopies(tableNames.size(), "?"));
         String getTablePkSql = GET_TABLE_PRIMARY_KEY_SQL.replace("(?)", "(" + placeHolders + ")");
         String getTableColumnsSql = GET_TABLE_COLUMNS_SQL.replace("(?)", "(" + placeHolders + ")");
         try (Connection connection = getJdbcConnection(databaseInfo)) {
