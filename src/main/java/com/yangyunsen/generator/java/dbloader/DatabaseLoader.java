@@ -41,24 +41,24 @@ public interface DatabaseLoader {
     /**
      * 获取表主键信息MAP
      *
-     * @param connection   数据库连接对象
-     * @param sql          查询sql
-     * @param username     数据库连接用户名
-     * @param tableNameStr 逗号分割的多个表名
+     * @param connection 数据库连接对象
+     * @param sql        查询sql
+     * @param username   数据库连接用户名
+     * @param tableNames 多个表名
      * @return 表主键信息MAP key: 表名 value: 主键名
      * @throws SQLException sql执行错误
      */
-    Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql, String username, String tableNameStr) throws SQLException;
+    Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql, String username, List<String> tableNames) throws SQLException;
 
     /**
      * 获取表字段名和字段类型等信息
      *
-     * @param connection   数据库连接对象
-     * @param sql          查询sql
-     * @param tableNameStr 逗号分割的多个表名
-     * @param pkColumnMap  表主键信息map
+     * @param connection  数据库连接对象
+     * @param sql         查询sql
+     * @param tableNames  多个表名
+     * @param pkColumnMap 表主键信息map
      * @return 字段富信息
      * @throws SQLException sql执行错误
      */
-    List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql, String tableNameStr, Map<String, String> pkColumnMap) throws SQLException;
+    List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql, List<String> tableNames, Map<String, String> pkColumnMap) throws SQLException;
 }
