@@ -48,7 +48,9 @@ public interface DatabaseLoader {
      * @return 表主键信息MAP key: 表名 value: 主键名
      * @throws SQLException sql执行错误
      */
-    Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql, String username, List<String> tableNames) throws SQLException;
+    Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql,
+                                              String username, List<String> tableNames)
+        throws SQLException;
 
     /**
      * 获取表字段名和字段类型等信息
@@ -60,5 +62,7 @@ public interface DatabaseLoader {
      * @return 字段富信息
      * @throws SQLException sql执行错误
      */
-    List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql, List<String> tableNames, Map<String, String> pkColumnMap) throws SQLException;
+    List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql,
+                                                List<String> tableNames, Map<String, String> pkColumnMap)
+        throws SQLException;
 }

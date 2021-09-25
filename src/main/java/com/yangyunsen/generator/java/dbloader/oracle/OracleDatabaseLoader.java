@@ -26,14 +26,14 @@ public class OracleDatabaseLoader implements DatabaseLoader {
     private DatabaseInfo databaseInfo;
 
     private static final String GET_TABLE_COLUMNS_SQL = "SELECT\n" +
-            "    t.TABLE_NAME \"tableName\",\n" +
-            "    t.COLUMN_NAME \"columnName\",\n" +
-            "    t.DATA_TYPE \"dataType\",\n" +
-            "    t.DATA_LENGTH \"dataLength\",\n" +
-            "    t.DATA_PRECISION \"dataPrecision\",\n" +
-            "    t.DATA_SCALE \"dataScale\"\n" +
-            "FROM USER_TAB_COLUMNS t\n" +
-            "WHERE t.TABLE_NAME IN (?)";
+        "    t.TABLE_NAME \"tableName\",\n" +
+        "    t.COLUMN_NAME \"columnName\",\n" +
+        "    t.DATA_TYPE \"dataType\",\n" +
+        "    t.DATA_LENGTH \"dataLength\",\n" +
+        "    t.DATA_PRECISION \"dataPrecision\",\n" +
+        "    t.DATA_SCALE \"dataScale\"\n" +
+        "FROM USER_TAB_COLUMNS t\n" +
+        "WHERE t.TABLE_NAME IN (?)";
 
     private static final String GET_TABLE_PRIMARY_KEY_SQL = "SELECT \n" +
         "\tcols.TABLE_NAME \"tableName\",\n" +
@@ -57,13 +57,13 @@ public class OracleDatabaseLoader implements DatabaseLoader {
         String getTableColumnsSql = GET_TABLE_COLUMNS_SQL.replace("(?)", "(" + placeHolders + ")");
         try (Connection connection = getJdbcConnection(databaseInfo)) {
             Map<String, String> pkColumnMap = this.getTablePrimaryKeyMap(
-                    connection,
-                    getTablePkSql,
-                    databaseInfo.getUsername(),
-                    tableNames
+                connection,
+                getTablePkSql,
+                databaseInfo.getUsername(),
+                tableNames
             );
             return this.getColumnNameAndType(connection, getTableColumnsSql, tableNames, pkColumnMap)
-                    .parallelStream().collect(Collectors.groupingBy(OracleColumnInfo::getTableName));
+                .parallelStream().collect(Collectors.groupingBy(OracleColumnInfo::getTableName));
         } catch (SQLException sqlException) {
             throw new GeneratorException("数据库执行异常", sqlException);
         } catch (ClassNotFoundException classNotFoundException) {
@@ -72,7 +72,10 @@ public class OracleDatabaseLoader implements DatabaseLoader {
     }
 
     @Override
-    public Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql, String username, List<String> tableNames) throws SQLException {
+    public Map<String, String> getTablePrimaryKeyMap(Connection connection, String sql,
+                                                     String username, List<String> tableNames)
+        throws SQLException {
+
         Map<String, String> pkColumnMap = new HashMap<>(16);
         try (PreparedStatement pkColumnPs = connection.prepareStatement(sql)) {
             int i = 1;
@@ -91,7 +94,10 @@ public class OracleDatabaseLoader implements DatabaseLoader {
     }
 
     @Override
-    public List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql, List<String> tableNames, Map<String, String> pkColumnMap) throws SQLException {
+    public List<OracleColumnInfo> getColumnNameAndType(Connection connection, String sql,
+                                                       List<String> tableNames, Map<String, String> pkColumnMap)
+        throws SQLException {
+
         List<OracleColumnInfo> resultList = new ArrayList<>();
         OracleColumnInfo oracleColumnInfo;
         try (PreparedStatement tableColumnPs = connection.prepareStatement(sql)) {
@@ -101,12 +107,12 @@ public class OracleDatabaseLoader implements DatabaseLoader {
             try (ResultSet tableColumnRs = tableColumnPs.executeQuery()) {
                 while (tableColumnRs.next()) {
                     oracleColumnInfo = new OracleColumnInfo()
-                            .setTableName(tableColumnRs.getString("tableName"))
-                            .setColumnName(tableColumnRs.getString("columnName"))
-                            .setDataType(tableColumnRs.getString("dataType"))
-                            .setDataLength(tableColumnRs.getInt("dataLength"))
-                            .setDataPrecision(tableColumnRs.getInt("dataPrecision"))
-                            .setDataScale(tableColumnRs.getInt("dataScale"));
+                        .setTableName(tableColumnRs.getString("tableName"))
+                        .setColumnName(tableColumnRs.getString("columnName"))
+                        .setDataType(tableColumnRs.getString("dataType"))
+                        .setDataLength(tableColumnRs.getInt("dataLength"))
+                        .setDataPrecision(tableColumnRs.getInt("dataPrecision"))
+                        .setDataScale(tableColumnRs.getInt("dataScale"));
                     String pkColumnName = pkColumnMap.get(oracleColumnInfo.getTableName());
                     if (StringUtils.equals(pkColumnName, oracleColumnInfo.getColumnName())) {
                         oracleColumnInfo.setPkFlag(Boolean.TRUE);
