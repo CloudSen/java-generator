@@ -131,6 +131,10 @@ public enum DefaultJavaTypePkgMapping implements JavaTypePkgMapping {
      * Clob
      */
     CLOB("Clob", "java.sql.Clob"),
+    /**
+     * 字节数组
+     */
+    BYTE_ARRAY("byte[]", null),
     //</editor-fold>
     ;
 

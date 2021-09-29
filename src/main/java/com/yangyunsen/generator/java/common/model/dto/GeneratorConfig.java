@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Set;
+
 /**
  * 生成器配置
  *
@@ -18,7 +20,9 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class GeneratorConfig {
 
+    private String author;
     private Mode mode;
     private PackageInfo packageInfo;
     private DatabaseInfo databaseInfo;
+    private Set<String> tableNames;
 }
