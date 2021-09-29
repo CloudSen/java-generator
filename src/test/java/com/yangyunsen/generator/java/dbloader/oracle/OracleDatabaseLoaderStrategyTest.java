@@ -1,9 +1,9 @@
 package com.yangyunsen.generator.java.dbloader.oracle;
 
-import com.yangyunsen.generator.java.common.JdbcDriverClass;
-import com.yangyunsen.generator.java.common.JdbcUrlPrefix;
-import com.yangyunsen.generator.java.dbloader.DatabaseLoader;
-import com.yangyunsen.generator.java.dbloader.module.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
+import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
+import com.yangyunsen.generator.java.dbloader.DatabaseLoaderStrategy;
 import org.apache.commons.lang3.BooleanUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Oracle数据库信息加载器测试类
@@ -20,7 +21,7 @@ import java.util.Map;
  * @author clouds3n
  * @date 2021-09-24
  */
-class OracleDatabaseLoaderTest {
+class OracleDatabaseLoaderStrategyTest {
 
     @Test
     @DisplayName("Oracle数据库信息加载器——获取数据库连接")
@@ -30,9 +31,9 @@ class OracleDatabaseLoaderTest {
                 .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
-                .setDriverClassName(JdbcDriverClass.ORACLE);
-            DatabaseLoader databaseLoader = new OracleDatabaseLoader(databaseInfo);
-            Connection connection = databaseLoader.getJdbcConnection(databaseInfo);
+                .setDriverPkgName(JdbcDriverPkgName.ORACLE);
+            DatabaseLoaderStrategy databaseLoaderStrategy = new OracleDatabaseLoaderStrategy(databaseInfo);
+            Connection connection = databaseLoaderStrategy.getJdbcConnection(databaseInfo);
             Assertions.assertNotNull(connection);
             Assertions.assertEquals(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl", connection.getMetaData().getURL());
             Assertions.assertEquals("CQDX_JXGLXX", connection.getMetaData().getUserName());
@@ -48,9 +49,9 @@ class OracleDatabaseLoaderTest {
                 .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
-                .setDriverClassName(JdbcDriverClass.ORACLE);
-            DatabaseLoader databaseLoader = new OracleDatabaseLoader(databaseInfo);
-            Map<String, List<OracleColumnInfo>> tableColumnsMap = databaseLoader.getMultiTableInfo(List.of("TEST_GENERATOR"));
+                .setDriverPkgName(JdbcDriverPkgName.ORACLE);
+            DatabaseLoaderStrategy databaseLoaderStrategy = new OracleDatabaseLoaderStrategy(databaseInfo);
+            Map<String, List<OracleColumnInfo>> tableColumnsMap = databaseLoaderStrategy.getMultiTableInfo(Set.of("TEST_GENERATOR"));
             Assertions.assertNotNull(tableColumnsMap);
             Assertions.assertEquals(1, tableColumnsMap.keySet().size());
             Assertions.assertEquals(3, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());
@@ -68,9 +69,9 @@ class OracleDatabaseLoaderTest {
                 .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
-                .setDriverClassName(JdbcDriverClass.ORACLE);
-            DatabaseLoader databaseLoader = new OracleDatabaseLoader(databaseInfo);
-            Map<String, List<OracleColumnInfo>> tableColumnsMap = databaseLoader.getMultiTableInfo(List.of("TEST_GENERATOR", "TEST_GENERATOR2"));
+                .setDriverPkgName(JdbcDriverPkgName.ORACLE);
+            DatabaseLoaderStrategy databaseLoaderStrategy = new OracleDatabaseLoaderStrategy(databaseInfo);
+            Map<String, List<OracleColumnInfo>> tableColumnsMap = databaseLoaderStrategy.getMultiTableInfo(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"));
             Assertions.assertNotNull(tableColumnsMap);
             Assertions.assertEquals(2, tableColumnsMap.keySet().size());
             Assertions.assertEquals(6, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());

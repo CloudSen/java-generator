@@ -1,5 +1,6 @@
 package com.yangyunsen.generator.java.config;
 
+import com.yangyunsen.generator.java.common.FreeMarkerManager;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
