@@ -36,7 +36,9 @@ public class EntityConverterStrategy implements ConverterStrategy {
                 List<String> importPkgNames = new ArrayList<>();
                 columns.forEach(columnInfo -> {
                     DefaultJavaTypePkgMapping javaTypePkgMapping = convertDbTypeToJavaType(columnInfo);
-                    importPkgNames.add(javaTypePkgMapping.getPkgName());
+                    if (StringUtils.isNotBlank(javaTypePkgMapping.getPkgName())) {
+                        importPkgNames.add(javaTypePkgMapping.getPkgName());
+                    }
                     entityFields.add(new EntityField().setPkFlg(columnInfo.getPkFlag())
                         .setDbName(columnInfo.getColumnName())
                         .setJavaType(javaTypePkgMapping.getJavaType())
