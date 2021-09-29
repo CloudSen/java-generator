@@ -1,17 +1,17 @@
-package com.yangyunsen.generator.java.common;
+package com.yangyunsen.generator.java.common.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * JDB驱动名
+ * JDB驱动全包名
  *
  * @author clouds3n
  * @date 2021-09-24
  */
 @Getter
 @RequiredArgsConstructor
-public enum JdbcDriverClass {
+public enum JdbcDriverPkgName {
 
     /**
      * mysql驱动类名
@@ -31,5 +31,5 @@ public enum JdbcDriverClass {
     MARIADB("org.mariadb.jdbc.Driver"),
     ;
 
-    private final String driverName;
+    private final String fullName;
 }

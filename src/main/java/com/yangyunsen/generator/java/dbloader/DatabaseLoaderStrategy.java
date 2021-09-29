@@ -1,6 +1,6 @@
 package com.yangyunsen.generator.java.dbloader;
 
-import com.yangyunsen.generator.java.dbloader.module.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 
 import java.sql.Connection;
@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 表示数据库信息加载器
@@ -15,7 +16,7 @@ import java.util.Map;
  * @author clouds3n
  * @date 2021-09-23
  */
-public interface DatabaseLoader {
+public interface DatabaseLoaderStrategy {
 
     /**
      * 获取JDBC连接对象
@@ -26,7 +27,7 @@ public interface DatabaseLoader {
      * @throws SQLException           获取JDBC连接失败
      */
     default Connection getJdbcConnection(DatabaseInfo databaseInfo) throws ClassNotFoundException, SQLException {
-        Class.forName(databaseInfo.getDriverClassName().getDriverName());
+        Class.forName(databaseInfo.getDriverPkgName().getFullName());
         return DriverManager.getConnection(databaseInfo.getUrl(), databaseInfo.getUsername(), databaseInfo.getPasswd());
     }
 
@@ -36,7 +37,7 @@ public interface DatabaseLoader {
      * @param tableNames 表名（大小写敏感）
      * @return 表信息 key: 表名  value: 表字段信息
      */
-    Map<String, List<OracleColumnInfo>> getMultiTableInfo(List<String> tableNames);
+    Map<String, List<OracleColumnInfo>> getMultiTableInfo(Set<String> tableNames);
 
     /**
      * 获取表主键信息MAP

@@ -2,8 +2,8 @@ package com.yangyunsen.generator.java.dbloader.oracle;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yangyunsen.generator.java.common.GeneratorException;
-import com.yangyunsen.generator.java.dbloader.DatabaseLoader;
-import com.yangyunsen.generator.java.dbloader.module.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
+import com.yangyunsen.generator.java.dbloader.DatabaseLoaderStrategy;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
  * @date 2021-09-23
  */
 @AllArgsConstructor
-public class OracleDatabaseLoader implements DatabaseLoader {
+public class OracleDatabaseLoaderStrategy implements DatabaseLoaderStrategy {
 
-    private DatabaseInfo databaseInfo;
+    private final DatabaseInfo databaseInfo;
 
     private static final String GET_TABLE_COLUMNS_SQL = "SELECT\n" +
         "    t.TABLE_NAME \"tableName\",\n" +
@@ -47,7 +47,7 @@ public class OracleDatabaseLoader implements DatabaseLoader {
         "ORDER BY cols.TABLE_NAME, cols.POSITION";
 
     @Override
-    public Map<String, List<OracleColumnInfo>> getMultiTableInfo(List<String> tableNames) {
+    public Map<String, List<OracleColumnInfo>> getMultiTableInfo(Set<String> tableNames) {
         boolean invalidParams = StringUtils.isBlank(databaseInfo.getUsername()) || CollectionUtil.isEmpty(tableNames);
         if (invalidParams) {
             throw new GeneratorException("用户名或表名列表为空");
@@ -56,13 +56,14 @@ public class OracleDatabaseLoader implements DatabaseLoader {
         String getTablePkSql = GET_TABLE_PRIMARY_KEY_SQL.replace("(?)", "(" + placeHolders + ")");
         String getTableColumnsSql = GET_TABLE_COLUMNS_SQL.replace("(?)", "(" + placeHolders + ")");
         try (Connection connection = getJdbcConnection(databaseInfo)) {
+            ArrayList<String> tableList = new ArrayList<>(tableNames);
             Map<String, String> pkColumnMap = this.getTablePrimaryKeyMap(
                 connection,
                 getTablePkSql,
                 databaseInfo.getUsername(),
-                tableNames
+                tableList
             );
-            return this.getColumnNameAndType(connection, getTableColumnsSql, tableNames, pkColumnMap)
+            return this.getColumnNameAndType(connection, getTableColumnsSql, tableList, pkColumnMap)
                 .parallelStream().collect(Collectors.groupingBy(OracleColumnInfo::getTableName));
         } catch (SQLException sqlException) {
             throw new GeneratorException("数据库执行异常", sqlException);

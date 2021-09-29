@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.common;
+package com.yangyunsen.generator.java.common.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

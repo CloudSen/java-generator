@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.dbloader.module;
+package com.yangyunsen.generator.java.common.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PathInfo implements Serializable {
+public class PackageInfo implements Serializable {
 
     private String parentPackage;
     private String childPackage;

@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.common;
+package com.yangyunsen.generator.java.common.model.statics;
 
 /**
  * 公共常量

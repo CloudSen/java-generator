@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.config;
+package com.yangyunsen.generator.java.common;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
