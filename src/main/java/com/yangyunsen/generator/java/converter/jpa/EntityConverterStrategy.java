@@ -56,9 +56,11 @@ public class EntityConverterStrategy implements ConverterStrategy {
         if (StringUtils.containsAny(dbType, "date", "timestamp")) {
             return DefaultJavaTypePkgMapping.LOCAL_DATE_TIME;
         } else if (StringUtils.contains(dbType, "number")) {
-            if (columnInfo.getDataScale() != null && columnInfo.getDataPrecision() < 10) {
+            if (columnInfo.getDataScale() == 0 && columnInfo.getDataPrecision() == 0) {
+                return DefaultJavaTypePkgMapping.LONG;
+            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() < 10) {
                 return DefaultJavaTypePkgMapping.DOUBLE;
-            } else if (columnInfo.getDataScale() != null && columnInfo.getDataPrecision() >= 10) {
+            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() >= 10) {
                 return DefaultJavaTypePkgMapping.BIG_DECIMAL;
             } else if (columnInfo.getDataPrecision() == 1) {
                 return DefaultJavaTypePkgMapping.BOOLEAN;
