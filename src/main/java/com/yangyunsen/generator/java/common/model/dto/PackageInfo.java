@@ -19,6 +19,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PackageInfo implements Serializable {
 
-    private String parentPackage;
-    private String childPackage;
+    private String entityPkgName;
+    private String dtoPkgName;
+    private String repoPkgName;
+    private String customRepoPkgName;
+    private String servicePkgName;
+    private String serviceImplPkgName;
+    private String controllerPkgName;
 }

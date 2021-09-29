@@ -6,6 +6,7 @@ package ${pkgName};
     </#list>
 </#if>
 
+<#include "fileHeader.ftl">
 @Data
 @Entity
 @Accessors(chain = true)

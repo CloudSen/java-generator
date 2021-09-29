@@ -1,5 +1,6 @@
 package com.yangyunsen.generator.java.converter.jpa.model;
 
+import com.yangyunsen.generator.java.converter.EntityTemplateData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntityInfo {
+public class JpaEntityTemplateData implements EntityTemplateData {
 
     /**
      * 包名
@@ -26,7 +27,7 @@ public class EntityInfo {
     /**
      * 需要import的类型包名列表
      */
-    private List<String> typePkgNames;
+    private List<String> importPkgNames;
     /**
      * 表名
      */

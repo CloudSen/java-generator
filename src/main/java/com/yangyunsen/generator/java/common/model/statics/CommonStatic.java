@@ -11,4 +11,6 @@ public final class CommonStatic {
     public static final String COMMA = ",";
     public static final String LP = "(";
     public static final String RP = ")";
+    public static final String UL = "_";
+    public static final Character UL_C = '_';
 }
