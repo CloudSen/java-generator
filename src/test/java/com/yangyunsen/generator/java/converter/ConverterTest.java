@@ -1,11 +1,12 @@
 package com.yangyunsen.generator.java.converter;
 
 import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
+import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
-import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import org.apache.commons.lang3.BooleanUtils;
@@ -32,10 +33,15 @@ class ConverterTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        Set<String> tables = Set.of("TEST_GENERATOR");
-        Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(databaseInfo, tables);
+        GeneratorConfig generatorConfig = new GeneratorConfig()
+            .setAuthor("CloudS3n")
+            .setMode(Mode.JPA)
+            .setTableNames(Set.of("TEST_GENERATOR"))
+            .setDatabaseInfo(databaseInfo)
+            .setPackageInfo(packageInfo);
+        Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
         assertDoesNotThrow(() -> {
-            List<JpaEntityTemplateData> entityTemplateData = Converter.convert(packageInfo, tableColumnsMap);
+            List<EntityTemplateData> entityTemplateData = Converter.convert(generatorConfig, tableColumnsMap);
             assertNotNull(entityTemplateData);
             // 解析出了一张表
             assertEquals(1, entityTemplateData.size());
@@ -82,10 +88,15 @@ class ConverterTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        Set<String> tables = Set.of("TEST_GENERATOR", "TEST_GENERATOR2");
-        Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(databaseInfo, tables);
+        GeneratorConfig generatorConfig = new GeneratorConfig()
+            .setAuthor("CloudS3n")
+            .setMode(Mode.JPA)
+            .setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
+            .setDatabaseInfo(databaseInfo)
+            .setPackageInfo(packageInfo);
+        Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
         assertDoesNotThrow(() -> {
-            List<JpaEntityTemplateData> entityTemplateData = Converter.convert(packageInfo, tableColumnsMap);
+            List<EntityTemplateData> entityTemplateData = Converter.convert(generatorConfig, tableColumnsMap);
             assertNotNull(entityTemplateData);
             // 解析出了2张表
             assertEquals(2, entityTemplateData.size());

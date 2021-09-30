@@ -1,7 +1,7 @@
 package ${pkgName};
 
-<#if typePkgNames?has_content>
-    <#list typePkgNames as typePkgName>
+<#if importPkgNames?has_content>
+    <#list importPkgNames as typePkgName>
         import ${typePkgName};
     </#list>
 </#if>

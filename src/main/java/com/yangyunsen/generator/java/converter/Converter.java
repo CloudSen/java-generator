@@ -1,6 +1,6 @@
 package com.yangyunsen.generator.java.converter;
 
-import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.converter.jpa.EntityConverterStrategy;
 import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Converter {
 
-    public static List<JpaEntityTemplateData> convert(PackageInfo packageInfo, Map<String, List<OracleColumnInfo>> tableColumnsMap) {
-        return new ConverterContext(new EntityConverterStrategy()).convertEntity(packageInfo, tableColumnsMap);
+    public static List<EntityTemplateData> convert(GeneratorConfig generatorConfig, Map<String, List<OracleColumnInfo>> tableColumnsMap) {
+        return new ConverterContext(new EntityConverterStrategy()).convertEntity(generatorConfig, tableColumnsMap);
     }
 }

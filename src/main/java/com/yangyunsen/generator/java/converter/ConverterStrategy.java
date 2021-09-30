@@ -1,8 +1,7 @@
 package com.yangyunsen.generator.java.converter;
 
 import com.yangyunsen.generator.java.common.mapping.DefaultJavaTypePkgMapping;
-import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
-import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 
 import java.util.List;
@@ -19,11 +18,11 @@ public interface ConverterStrategy {
     /**
      * 将表数据转换为模板需要的数据
      *
-     * @param packageInfo     包信息
+     * @param generatorConfig 全局配置
      * @param tableColumnsMap 表字段信息
      * @return 模板数据列表
      */
-    List<JpaEntityTemplateData> convert(PackageInfo packageInfo, Map<String, List<OracleColumnInfo>> tableColumnsMap);
+    List<EntityTemplateData> convert(GeneratorConfig generatorConfig, Map<String, List<OracleColumnInfo>> tableColumnsMap);
 
     /**
      * 数据库字段类型转java类型

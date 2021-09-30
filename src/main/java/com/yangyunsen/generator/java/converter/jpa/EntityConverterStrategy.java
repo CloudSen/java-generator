@@ -2,12 +2,15 @@ package com.yangyunsen.generator.java.converter.jpa;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yangyunsen.generator.java.common.mapping.DefaultJavaTypePkgMapping;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.ConverterStrategy;
+import com.yangyunsen.generator.java.converter.EntityTemplateData;
 import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
 import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
+import com.yangyunsen.generator.java.util.GeneratorDateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.CaseUtils;
 
@@ -24,10 +27,13 @@ import java.util.Map;
 public class EntityConverterStrategy implements ConverterStrategy {
 
     @Override
-    public List<JpaEntityTemplateData> convert(PackageInfo packageInfo, Map<String, List<OracleColumnInfo>> tableColumnsMap) {
-        final List<JpaEntityTemplateData> jpaEntityTemplateDataList = new ArrayList<>();
+    public List<EntityTemplateData> convert(GeneratorConfig generatorConfig, Map<String, List<OracleColumnInfo>> tableColumnsMap) {
+        final List<EntityTemplateData> entityTemplateDataList = new ArrayList<>();
+        final PackageInfo packageInfo = generatorConfig.getPackageInfo();
         tableColumnsMap.forEach((tableName, columns) -> {
             JpaEntityTemplateData jpaEntityTemplateData = new JpaEntityTemplateData()
+                .setAuthor(generatorConfig.getAuthor())
+                .setCreateDate(GeneratorDateUtil.getCommentDate())
                 .setPkgName(packageInfo.getEntityPkgName())
                 .setTableName(tableName)
                 .setClassName(CaseUtils.toCamelCase(tableName, true, CommonStatic.UL_C));
@@ -46,10 +52,10 @@ public class EntityConverterStrategy implements ConverterStrategy {
                 });
                 jpaEntityTemplateData.setImportPkgNames(importPkgNames)
                     .setFields(entityFields);
-                jpaEntityTemplateDataList.add(jpaEntityTemplateData);
+                entityTemplateDataList.add(jpaEntityTemplateData);
             }
         });
-        return jpaEntityTemplateDataList;
+        return entityTemplateDataList;
     }
 
     @Override

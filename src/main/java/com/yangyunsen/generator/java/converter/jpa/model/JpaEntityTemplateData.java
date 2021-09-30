@@ -40,4 +40,12 @@ public class JpaEntityTemplateData implements EntityTemplateData {
      * 字段信息列表
      */
     private List<EntityField> fields;
+    /**
+     * 作者
+     */
+    private String author;
+    /**
+     * 生成时间
+     */
+    private String createDate;
 }

@@ -2,6 +2,7 @@ package com.yangyunsen.generator.java.dbloader;
 
 import com.yangyunsen.generator.java.common.GeneratorException;
 import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleDatabaseLoaderStrategy;
@@ -18,7 +19,9 @@ import java.util.Set;
  */
 public class DbLoader {
 
-    public static Map<String, List<OracleColumnInfo>> getColumnInfo(DatabaseInfo databaseInfo, Set<String> tableNames) {
+    public static Map<String, List<OracleColumnInfo>> getColumnInfo(GeneratorConfig generatorConfig) {
+        final DatabaseInfo databaseInfo = generatorConfig.getDatabaseInfo();
+        final Set<String> tableNames = generatorConfig.getTableNames();
         JdbcDriverPkgName driverPkgName = databaseInfo.getDriverPkgName();
         if (driverPkgName == JdbcDriverPkgName.ORACLE) {
             return new DbLoaderContext(new OracleDatabaseLoaderStrategy(databaseInfo)).getMultiTableInfo(tableNames);
