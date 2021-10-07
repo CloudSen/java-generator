@@ -11,7 +11,7 @@ package ${pkgName};
 @Entity
 @Accessors(chain = true)
 @Table(name="${tableName}")
-public class ${className}Entity {
+public class ${className} {
 <#list fields as field>
 
     <#if field.pkFlg!false>
