@@ -36,7 +36,7 @@ public class EntityConverterStrategy implements ConverterStrategy {
                 .setCreateDate(GeneratorDateUtil.getCommentDate())
                 .setPkgName(packageInfo.getEntityPkgName())
                 .setTableName(tableName)
-                .setClassName(CaseUtils.toCamelCase(tableName, true, CommonStatic.UL_C));
+                .setClassName(CaseUtils.toCamelCase(tableName, true, CommonStatic.UL_C) + CommonStatic.ENTITY_CLASS_SUFFIX);
             if (CollectionUtil.isNotEmpty(columns)) {
                 List<EntityField> entityFields = new ArrayList<>();
                 List<String> importPkgNames = new ArrayList<>();
