@@ -20,4 +20,7 @@ public final class CommonStatic {
     public static final Character UL_C = '_';
     public static final String SRC_PATH = "src" + File.separator + "main" + File.separator + "java" + File.separator;
     public static final String JAVA_PATH = SystemUtil.getUserInfo().getCurrentDir() + SRC_PATH;
+    public static final String JAVA_FILE_SUFFIX = ".java";
+    public static final String FILE_SCHEMA = "file:";
+    public static final String ENTITY_CLASS_SUFFIX = "Entity";
 }

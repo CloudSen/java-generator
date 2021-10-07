@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,13 +22,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * 文件生成器
+ * Entity文件生成器
  *
  * @author CloudS3n
  * @date 2021-09-30 09:56
  */
 @Slf4j
-public class FileWriter {
+public class EntityFileWriter {
 
     public static void writeEntityToDisk(GeneratorConfig generatorConfig, List<EntityTemplateData> tempDataList)
         throws IOException, TemplateException {
@@ -39,14 +38,24 @@ public class FileWriter {
         String entityTemplateName = JpaTemplateMapping.getTemplateName(generatorConfig.getMode(), MvcLevel.ENTITY);
         Template template = fmc.getTemplate(entityTemplateName);
         String entityPathStr = parsePkgNameToPath(packageInfo.getEntityPkgName());
-        Path entityPath = Paths.get(URI.create(entityPathStr));
+        Path entityPath = Paths.get(URI.create(CommonStatic.FILE_SCHEMA + entityPathStr));
+        String entityFilePathStr;
+        Path entityFilePath;
         boolean pathExists = Files.exists(entityPath);
         if (!pathExists) {
-
+            log.info("创建路径: {}", entityPathStr);
             Files.createDirectories(entityPath);
         }
         for (EntityTemplateData templateData : tempDataList) {
-            template.process(templateData, new OutputStreamWriter(System.out));
+            entityFilePathStr = entityPathStr + templateData.getClassName() + CommonStatic.JAVA_FILE_SUFFIX;
+            entityFilePath = Paths.get(URI.create(CommonStatic.FILE_SCHEMA + entityFilePathStr));
+            boolean fileExists = Files.exists(entityFilePath);
+            if (fileExists) {
+                log.info("文件已存在: {}", entityFilePathStr);
+                return;
+            }
+            log.info("创建文件: {}", entityFilePathStr);
+            template.process(templateData, Files.newBufferedWriter(entityFilePath));
         }
     }
 
