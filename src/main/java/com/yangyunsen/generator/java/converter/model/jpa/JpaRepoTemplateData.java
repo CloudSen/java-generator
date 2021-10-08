@@ -1,6 +1,6 @@
-package com.yangyunsen.generator.java.converter.jpa.model;
+package com.yangyunsen.generator.java.converter.model.jpa;
 
-import com.yangyunsen.generator.java.converter.RepoTemplateData;
+import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

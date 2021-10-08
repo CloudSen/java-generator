@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.jpa.model;
+package com.yangyunsen.generator.java.converter.model.jpa;
 
 /**
  * @author clouds3n

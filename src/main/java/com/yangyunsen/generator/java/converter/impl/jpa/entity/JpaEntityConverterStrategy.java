@@ -1,14 +1,15 @@
-package com.yangyunsen.generator.java.converter.jpa;
+package com.yangyunsen.generator.java.converter.impl.jpa.entity;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yangyunsen.generator.java.common.mapping.DefaultJavaTypePkgMapping;
+import com.yangyunsen.generator.java.common.mapping.JavaTypePkgMapping;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
-import com.yangyunsen.generator.java.converter.ConverterStrategy;
-import com.yangyunsen.generator.java.converter.EntityTemplateData;
-import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
-import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
+import com.yangyunsen.generator.java.converter.EntityConverterStrategy;
+import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
+import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import com.yangyunsen.generator.java.util.GeneratorDateUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,7 @@ import java.util.Map;
  * @author clouds3n
  * @date 2021-09-27
  */
-public class EntityConverterStrategy implements ConverterStrategy {
+public class JpaEntityConverterStrategy implements EntityConverterStrategy {
 
     @Override
     public List<EntityTemplateData> convert(GeneratorConfig generatorConfig, Map<String, List<OracleColumnInfo>> tableColumnsMap) {
@@ -41,7 +42,7 @@ public class EntityConverterStrategy implements ConverterStrategy {
                 List<EntityField> entityFields = new ArrayList<>();
                 List<String> importPkgNames = new ArrayList<>();
                 columns.forEach(columnInfo -> {
-                    DefaultJavaTypePkgMapping javaTypePkgMapping = convertDbTypeToJavaType(columnInfo);
+                    JavaTypePkgMapping javaTypePkgMapping = convertDbTypeToJavaType(columnInfo);
                     if (StringUtils.isNotBlank(javaTypePkgMapping.getPkgName())) {
                         importPkgNames.add(javaTypePkgMapping.getPkgName());
                     }
@@ -59,7 +60,7 @@ public class EntityConverterStrategy implements ConverterStrategy {
     }
 
     @Override
-    public DefaultJavaTypePkgMapping convertDbTypeToJavaType(OracleColumnInfo columnInfo) {
+    public JavaTypePkgMapping convertDbTypeToJavaType(OracleColumnInfo columnInfo) {
         String dbType = StringUtils.lowerCase(columnInfo.getDataType());
         if (StringUtils.containsAny(dbType, CommonStatic.DATE_STR, CommonStatic.TIMESTAMP_STR)) {
             return DefaultJavaTypePkgMapping.LOCAL_DATE_TIME;

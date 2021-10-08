@@ -6,7 +6,8 @@ import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
-import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
+import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import org.apache.commons.lang3.BooleanUtils;
@@ -33,12 +34,13 @@ class ConverterTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
         assertDoesNotThrow(() -> {
             List<EntityTemplateData> entityTemplateData = Converter.convert(generatorConfig, tableColumnsMap);
@@ -88,12 +90,13 @@ class ConverterTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
         assertDoesNotThrow(() -> {
             List<EntityTemplateData> entityTemplateData = Converter.convert(generatorConfig, tableColumnsMap);

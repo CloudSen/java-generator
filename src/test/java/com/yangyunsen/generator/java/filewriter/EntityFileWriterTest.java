@@ -7,9 +7,9 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
-import com.yangyunsen.generator.java.converter.EntityTemplateData;
-import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
-import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
+import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
@@ -41,12 +41,13 @@ class EntityFileWriterTest implements FileCleaner {
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
         PackageInfo packageInfo = new PackageInfo()
             .setEntityPkgName("com.yangyunsen.generator.java.entity");
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         assertDoesNotThrow(() -> {
             List<EntityTemplateData> entityTemplateDataList = Arrays.asList(
                 new JpaEntityTemplateData().setAuthor("clouds3n")

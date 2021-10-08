@@ -27,20 +27,23 @@ class DbLoaderTest {
     @Test
     @DisplayName("数据库加载器-加载不支持的数据库")
     void loadNotSupportedDb() {
-        DatabaseInfo databaseInfo = new DatabaseInfo()
-            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
-            .setUsername("CQDX_JXGLXX")
-            .setPasswd("cquisse")
-            .setDriverPkgName(JdbcDriverPkgName.POSTGRE_SQL);
-        PackageInfo packageInfo = new PackageInfo()
-            .setEntityPkgName("com.yangyunsen.demo.entity");
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
-        Assertions.assertThrows(GeneratorException.class, () -> DbLoader.getColumnInfo(generatorConfig));
+        Assertions.assertThrows(GeneratorException.class, () -> {
+            DatabaseInfo databaseInfo = new DatabaseInfo()
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUsername("CQDX_JXGLXX")
+                .setPasswd("cquisse")
+                .setDriverPkgName(JdbcDriverPkgName.POSTGRE_SQL);
+            PackageInfo packageInfo = new PackageInfo()
+                .setEntityPkgName("com.yangyunsen.demo.entity");
+            GeneratorConfig generatorConfig = GeneratorConfig.builder()
+                .author("CloudS3n")
+                .mode(Mode.JPA)
+                .tableNames(Set.of("TEST_GENERATOR"))
+                .databaseInfo(databaseInfo)
+                .packageInfo(packageInfo)
+                .build();
+            DbLoader.getColumnInfo(generatorConfig);
+        });
     }
 
     @Test
@@ -54,12 +57,13 @@ class DbLoaderTest {
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
         PackageInfo packageInfo = new PackageInfo()
             .setEntityPkgName("com.yangyunsen.demo.entity");
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Assertions.assertDoesNotThrow(() -> {
             Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
             Assertions.assertNotNull(tableColumnsMap);
@@ -81,12 +85,13 @@ class DbLoaderTest {
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
         PackageInfo packageInfo = new PackageInfo()
             .setEntityPkgName("com.yangyunsen.demo.entity");
-        GeneratorConfig generatorConfig = new GeneratorConfig()
-            .setAuthor("CloudS3n")
-            .setMode(Mode.JPA)
-            .setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
-            .setDatabaseInfo(databaseInfo)
-            .setPackageInfo(packageInfo);
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Assertions.assertDoesNotThrow(() -> {
             Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
             Assertions.assertNotNull(tableColumnsMap);

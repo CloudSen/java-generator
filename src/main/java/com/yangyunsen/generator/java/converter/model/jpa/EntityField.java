@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.jpa.model;
+package com.yangyunsen.generator.java.converter.model.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

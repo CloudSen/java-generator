@@ -1,10 +1,10 @@
-package com.yangyunsen.generator.java.converter;
+package com.yangyunsen.generator.java.converter.model;
 
 /**
  * @author CloudS3n
  * @date 2021-10-08 13:44
  */
-public interface RepoTemplateData {
+public interface RepoTemplateData extends ClassCommentTemplateData {
 
     /**
      * 获取包名
@@ -40,18 +40,4 @@ public interface RepoTemplateData {
      * @return 主键对应的java类型
      */
     String getPkJavaType();
-
-    /**
-     * 获取作者
-     *
-     * @return 作者
-     */
-    String getAuthor();
-
-    /**
-     * 获取生成时间
-     *
-     * @return 生成时间
-     */
-    String getCreateDate();
 }

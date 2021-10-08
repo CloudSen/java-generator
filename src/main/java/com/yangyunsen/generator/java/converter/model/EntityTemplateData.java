@@ -1,6 +1,6 @@
-package com.yangyunsen.generator.java.converter;
+package com.yangyunsen.generator.java.converter.model;
 
-import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
+import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 
 import java.util.List;
 

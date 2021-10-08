@@ -1,7 +1,7 @@
 package com.yangyunsen.generator.java.converter.jpa;
 
-import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
-import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
+import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @author clouds3n
  * @date 2021-09-27
  */
-class EntityConverterStrategyTest {
+class JpaEntityConverterStrategyTest {
 
     @Test
     void convert() {

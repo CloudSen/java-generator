@@ -7,7 +7,7 @@ import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
-import com.yangyunsen.generator.java.converter.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

@@ -1,10 +1,10 @@
-package com.yangyunsen.generator.java.converter;
+package com.yangyunsen.generator.java.converter.model;
 
 /**
  * @author CloudS3n
  * @date 2021-10-08 12:44
  */
-public interface ControllerTemplateData {
+public interface ControllerTemplateData extends ClassCommentTemplateData {
 
     /**
      * 获取controller包名
@@ -33,18 +33,4 @@ public interface ControllerTemplateData {
      * @return 获取controller类名
      */
     String getClassName();
-
-    /**
-     * 获取代码作者
-     *
-     * @return 代码作者
-     */
-    String getAuthor();
-
-    /**
-     * 获取创建日期
-     *
-     * @return 创建日期
-     */
-    String getCreateDate();
 }

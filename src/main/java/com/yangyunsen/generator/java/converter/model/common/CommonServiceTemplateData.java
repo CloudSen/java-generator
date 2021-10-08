@@ -1,6 +1,6 @@
-package com.yangyunsen.generator.java.converter.common.model;
+package com.yangyunsen.generator.java.converter.model.common;
 
-import com.yangyunsen.generator.java.converter.ServiceTemplateData;
+import com.yangyunsen.generator.java.converter.model.ServiceTemplateData;
 import lombok.Data;
 
 /**

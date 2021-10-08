@@ -1,10 +1,10 @@
-package com.yangyunsen.generator.java.converter;
+package com.yangyunsen.generator.java.converter.model;
 
 /**
  * @author CloudS3n
  * @date 2021-10-08 13:10
  */
-public interface ServiceImplTemplateData {
+public interface ServiceImplTemplateData extends ClassCommentTemplateData {
 
     /**
      * 获取包名
@@ -40,18 +40,4 @@ public interface ServiceImplTemplateData {
      * @return service接口类名
      */
     String getInterfaceClassName();
-
-    /**
-     * 获取代码作者
-     *
-     * @return 代码作者
-     */
-    String getAuthor();
-
-    /**
-     * 获取生成日期
-     *
-     * @return 生成日期
-     */
-    String getCreateDate();
 }
