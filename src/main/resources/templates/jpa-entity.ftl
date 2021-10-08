@@ -1,5 +1,11 @@
 package ${pkgName};
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 <#if importPkgNames?has_content>
     <#list importPkgNames as typePkgName>
         import ${typePkgName};

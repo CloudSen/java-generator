@@ -46,7 +46,7 @@ class ConverterTest {
             // 解析出了一张表
             assertEquals(1, entityTemplateData.size());
             entityTemplateData.forEach(data -> {
-                assertEquals("TestGenerator", data.getClassName());
+                assertEquals("TestGeneratorEntity", data.getClassName());
                 assertEquals("com.yangyunsen.test", data.getPkgName());
                 assertEquals("TEST_GENERATOR", data.getTableName());
                 assertEquals(3, data.getFields().size());
@@ -103,10 +103,10 @@ class ConverterTest {
             entityTemplateData.forEach(data -> {
                 if (!StringUtils.contains(data.getClassName(), "2")) {
                     assertEquals("TEST_GENERATOR", data.getTableName());
-                    assertEquals("TestGenerator", data.getClassName());
+                    assertEquals("TestGeneratorEntity", data.getClassName());
                 } else {
                     assertEquals("TEST_GENERATOR2", data.getTableName());
-                    assertEquals("TestGenerator2", data.getClassName());
+                    assertEquals("TestGenerator2Entity", data.getClassName());
                 }
                 assertEquals("com.yangyunsen.test", data.getPkgName());
                 assertEquals(3, data.getFields().size());

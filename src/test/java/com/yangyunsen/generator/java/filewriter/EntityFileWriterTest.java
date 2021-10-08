@@ -6,16 +6,22 @@ import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
+import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.EntityTemplateData;
 import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
 import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
+import org.apache.commons.lang3.SystemUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -24,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
  * @date 2021-09-30 14:25
  */
 class EntityFileWriterTest {
+
+    private static final Set<String> FILE_PATHS = new HashSet<>();
 
     @Test
     void writeEntityToDisk() {
@@ -63,7 +71,30 @@ class EntityFileWriterTest {
                         new EntityField().setPkFlg(null).setDbName("AGE").setJavaName("age").setJavaType("Integer")
                     ))
             );
+            entityTemplateDataList.stream().map(EntityTemplateData::getPkgName)
+                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
+                .forEach(FILE_PATHS::add);
             EntityFileWriter.writeEntityToDisk(generatorConfig, entityTemplateDataList);
+        });
+    }
+
+    @AfterAll
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    static void deleteFiles() {
+        assertDoesNotThrow(() -> {
+            for (String pathStr : FILE_PATHS) {
+                URI uri = SystemUtils.IS_OS_WINDOWS ?
+                    new URI("file:/" + CommonStatic.JAVA_PATH.replaceAll("\\\\", CommonStatic.SLASH) + pathStr)
+                    : new URI("file:" + CommonStatic.JAVA_PATH + pathStr);
+                Path path = Paths.get(uri);
+                if (Files.isDirectory(path)) {
+                    System.out.println("删除目录和内容: " + path);
+                    Files.walk(path)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+                }
+            }
         });
     }
 }

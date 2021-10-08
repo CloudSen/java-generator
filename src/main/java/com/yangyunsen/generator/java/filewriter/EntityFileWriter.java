@@ -13,7 +13,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -61,7 +60,7 @@ public class EntityFileWriter {
 
     public static String parsePkgNameToPath(String pkgName) {
         return SystemUtil.getOsInfo().isWindows()?
-            CommonStatic.JAVA_PATH + pkgName.replaceAll("\\.", "\\\\") + File.separator
-            : CommonStatic.JAVA_PATH + pkgName.replaceAll("\\.", File.separator) + File.separator;
+            CommonStatic.SLASH + CommonStatic.JAVA_PATH.replaceAll("\\\\", CommonStatic.SLASH) + pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH
+            : CommonStatic.JAVA_PATH + pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH;
     }
 }

@@ -61,31 +61,31 @@ public class EntityConverterStrategy implements ConverterStrategy {
     @Override
     public DefaultJavaTypePkgMapping convertDbTypeToJavaType(OracleColumnInfo columnInfo) {
         String dbType = StringUtils.lowerCase(columnInfo.getDataType());
-        if (StringUtils.containsAny(dbType, "date", "timestamp")) {
+        if (StringUtils.containsAny(dbType, CommonStatic.DATE_STR, CommonStatic.TIMESTAMP_STR)) {
             return DefaultJavaTypePkgMapping.LOCAL_DATE_TIME;
-        } else if (StringUtils.contains(dbType, "number")) {
+        } else if (StringUtils.contains(dbType, CommonStatic.NUMBER_STR)) {
             if (columnInfo.getDataScale() == 0 && columnInfo.getDataPrecision() == 0) {
                 return DefaultJavaTypePkgMapping.LONG;
-            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() < 10) {
+            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() < CommonStatic.INT_10) {
                 return DefaultJavaTypePkgMapping.DOUBLE;
-            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() >= 10) {
+            } else if (columnInfo.getDataScale() > 0 && columnInfo.getDataPrecision() >= CommonStatic.INT_10) {
                 return DefaultJavaTypePkgMapping.BIG_DECIMAL;
             } else if (columnInfo.getDataPrecision() == 1) {
                 return DefaultJavaTypePkgMapping.BOOLEAN;
-            } else if (columnInfo.getDataPrecision() < 10) {
+            } else if (columnInfo.getDataPrecision() < CommonStatic.INT_10) {
                 return DefaultJavaTypePkgMapping.INTEGER;
-            } else if (columnInfo.getDataPrecision() >= 10 && columnInfo.getDataPrecision() < 19) {
+            } else if (columnInfo.getDataPrecision() >= CommonStatic.INT_10 && columnInfo.getDataPrecision() < CommonStatic.INT_19) {
                 return DefaultJavaTypePkgMapping.LONG;
             } else {
                 return DefaultJavaTypePkgMapping.BIG_DECIMAL;
             }
-        } else if (StringUtils.contains(dbType, "float")) {
+        } else if (StringUtils.contains(dbType, CommonStatic.FLOAT_STR)) {
             return DefaultJavaTypePkgMapping.FLOAT;
-        } else if (StringUtils.contains(dbType, "blob")) {
+        } else if (StringUtils.contains(dbType, CommonStatic.BLOB_STR)) {
             return DefaultJavaTypePkgMapping.BLOB;
-        } else if (StringUtils.containsAny(dbType, "binary", "raw")) {
+        } else if (StringUtils.containsAny(dbType, CommonStatic.BINARY_STR, CommonStatic.RAW_STR)) {
             return DefaultJavaTypePkgMapping.BYTE_ARRAY;
-        } else if (StringUtils.contains(dbType, "varchar") && columnInfo.getDataLength() == 1) {
+        } else if (StringUtils.contains(dbType, CommonStatic.VARCHAR_STR) && columnInfo.getDataLength() == 1) {
             return DefaultJavaTypePkgMapping.BOOLEAN;
         } else {
             return DefaultJavaTypePkgMapping.STRING;
