@@ -10,18 +10,16 @@ import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.EntityTemplateData;
 import com.yangyunsen.generator.java.converter.jpa.model.EntityField;
 import com.yangyunsen.generator.java.converter.jpa.model.JpaEntityTemplateData;
-import org.apache.commons.lang3.SystemUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -29,7 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
  * @author CloudS3n
  * @date 2021-09-30 14:25
  */
-class EntityFileWriterTest {
+@Slf4j
+class EntityFileWriterTest implements FileCleaner {
 
     private static final Set<String> FILE_PATHS = new HashSet<>();
 
@@ -79,22 +78,8 @@ class EntityFileWriterTest {
     }
 
     @AfterAll
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    static void deleteFiles() {
-        assertDoesNotThrow(() -> {
-            for (String pathStr : FILE_PATHS) {
-                URI uri = SystemUtils.IS_OS_WINDOWS ?
-                    new URI("file:/" + CommonStatic.JAVA_PATH.replaceAll("\\\\", CommonStatic.SLASH) + pathStr)
-                    : new URI("file:" + CommonStatic.JAVA_PATH + pathStr);
-                Path path = Paths.get(uri);
-                if (Files.isDirectory(path)) {
-                    System.out.println("删除目录和内容: " + path);
-                    Files.walk(path)
-                        .sorted(Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(File::delete);
-                }
-            }
-        });
+    static void cleanResource() {
+        FILE_PATHS.forEach(path -> log.info("删除目录和内容: {}", path));
+        FileCleaner.deleteFiles(FILE_PATHS);
     }
 }
