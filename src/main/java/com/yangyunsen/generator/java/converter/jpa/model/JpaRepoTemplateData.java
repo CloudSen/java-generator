@@ -1,45 +1,41 @@
 package com.yangyunsen.generator.java.converter.jpa.model;
 
-import com.yangyunsen.generator.java.converter.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.RepoTemplateData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 /**
- * Entity模板数据类
- *
- * @author clouds3n
- * @date 2021-09-27
+ * @author CloudS3n
+ * @date 2021-10-08 13:48
  */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class JpaEntityTemplateData implements EntityTemplateData {
+public class JpaRepoTemplateData implements RepoTemplateData {
 
     /**
      * 包名
      */
     private String pkgName;
     /**
-     * 需要import的类型包名列表
+     * 实体类包名
      */
-    private List<String> importPkgNames;
-    /**
-     * 表名
-     */
-    private String tableName;
+    private String entityPkgName;
     /**
      * 类名
      */
     private String className;
     /**
-     * 字段信息列表
+     * 实体类类名
      */
-    private List<EntityField> fields;
+    private String entityClassName;
+    /**
+     * 主键对应的java类型
+     */
+    private String pkJavaType;
     /**
      * 作者
      */

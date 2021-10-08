@@ -2,7 +2,7 @@ package com.yangyunsen.generator.java.filewriter;
 
 import cn.hutool.system.SystemUtil;
 import com.yangyunsen.generator.java.common.FreeMarkerManager;
-import com.yangyunsen.generator.java.common.mapping.JpaTemplateMapping;
+import com.yangyunsen.generator.java.common.mapping.DefaultTemplateMapping;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
@@ -34,7 +34,7 @@ public class EntityFileWriter {
 
         Configuration fmc = FreeMarkerManager.getConfig();
         PackageInfo packageInfo = generatorConfig.getPackageInfo();
-        String entityTemplateName = JpaTemplateMapping.getTemplateName(generatorConfig.getMode(), MvcLevel.ENTITY);
+        String entityTemplateName = DefaultTemplateMapping.getTemplateName(generatorConfig.getMode(), MvcLevel.ENTITY);
         Template template = fmc.getTemplate(entityTemplateName);
         String entityPathStr = parsePkgNameToPath(packageInfo.getEntityPkgName());
         Path entityPath = Paths.get(URI.create(CommonStatic.FILE_SCHEMA + entityPathStr));

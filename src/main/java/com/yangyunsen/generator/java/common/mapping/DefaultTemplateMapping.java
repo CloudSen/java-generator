@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Getter
 @RequiredArgsConstructor
-public enum JpaTemplateMapping implements TemplateMapping {
+public enum DefaultTemplateMapping implements TemplateMapping {
 
     //<editor-fold desc="common">
     /**
@@ -27,7 +27,15 @@ public enum JpaTemplateMapping implements TemplateMapping {
     /**
      * controller.ftl
      */
-    CONTROLLER(List.of(Mode.JPA), MvcLevel.CONTROLLER, "controller.ftl"),
+    CONTROLLER(List.of(Mode.JPA, Mode.MP), MvcLevel.CONTROLLER, "controller.ftl"),
+    /**
+     * service.ftl
+     */
+    SERVICE(List.of(Mode.JPA, Mode.MP), MvcLevel.SERVICE, "service.ftl"),
+    /**
+     * service-impl.ftl
+     */
+    JPA_SERVICE_IMPL(List.of(Mode.JPA, Mode.MP), MvcLevel.SERVICE_IMPL, "service-impl.ftl"),
     //</editor-fold>
 
     //<editor-fold desc="jpa">
@@ -47,33 +55,17 @@ public enum JpaTemplateMapping implements TemplateMapping {
      * jpa-custom-repo-impl.ftl
      */
     JPA_CUSTOM_REPOSITORY_IMPL(List.of(Mode.JPA), MvcLevel.CUSTOM_REPO_IMPL, "jpa-custom-repo-impl.ftl"),
-    /**
-     * jpa-service.ftl
-     */
-    JPA_SERVICE(List.of(Mode.JPA), MvcLevel.SERVICE, "jpa-service.ftl"),
-    /**
-     * jpa-service-impl.ftl
-     */
-    JPA_SERVICE_IMPL(List.of(Mode.JPA), MvcLevel.SERVICE_IMPL, "jpa-service-impl.ftl"),
     //</editor-fold>
 
     //<editor-fold desc="mybatis">
     /**
      * mp-entity.ftl
      */
-    MP_ENTITY(List.of(Mode.JPA), MvcLevel.ENTITY, "mp-entity.ftl"),
+    MP_ENTITY(List.of(Mode.MP), MvcLevel.ENTITY, "mp-entity.ftl"),
     /**
      * mp-repo.ftl
      */
-    MP_REPOSITORY(List.of(Mode.JPA), MvcLevel.REPO, "mp-repo.ftl"),
-    /**
-     * mp-service.ftl
-     */
-    MP_SERVICE(List.of(Mode.JPA), MvcLevel.SERVICE, "mp-service.ftl"),
-    /**
-     * mp-service-impl.ftl
-     */
-    MP_SERVICE_IMPL(List.of(Mode.JPA), MvcLevel.SERVICE_IMPL, "mp-service-impl.ftl"),
+    MP_REPOSITORY(List.of(Mode.MP), MvcLevel.REPO, "mp-repo.ftl"),
     //</editor-fold>
     ;
 
@@ -85,7 +77,7 @@ public enum JpaTemplateMapping implements TemplateMapping {
         return Arrays.stream(values())
             .filter(m -> m.modes.contains(mode) && m.mvcLevel == mvcLevel)
             .findFirst()
-            .map(JpaTemplateMapping::getTemplateName)
+            .map(DefaultTemplateMapping::getTemplateName)
             .orElseThrow(() -> new GeneratorException("不支持的类型: " + mode + "," + mvcLevel));
     }
 }
