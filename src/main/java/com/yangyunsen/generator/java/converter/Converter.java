@@ -3,6 +3,7 @@ package com.yangyunsen.generator.java.converter;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.ServiceTemplateData;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class Converter {
         ControllerConverterContext controllerConverterContext = generatorConfig.getComponentInfo()
             .getConverterComponent().getControllerConverterContext();
         return controllerConverterContext.convertController(generatorConfig);
+    }
+
+    public static List<ServiceTemplateData> convertService(GeneratorConfig generatorConfig) {
+        ServiceConverterContext serviceConverterContext = generatorConfig.getComponentInfo()
+            .getConverterComponent().getServiceConverterContext();
+        return serviceConverterContext.convertService(generatorConfig);
     }
 }
