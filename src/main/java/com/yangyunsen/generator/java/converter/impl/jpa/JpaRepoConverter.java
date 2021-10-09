@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.impl.jpa.repo;
+package com.yangyunsen.generator.java.converter.impl.jpa;
 
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.enums.MvcLevel;

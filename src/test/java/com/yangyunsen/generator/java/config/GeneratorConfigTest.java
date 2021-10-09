@@ -5,7 +5,7 @@ import com.yangyunsen.generator.java.common.model.dto.*;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
-import com.yangyunsen.generator.java.converter.impl.jpa.entity.JpaEntityConverterStrategy;
+import com.yangyunsen.generator.java.converter.impl.jpa.JpaEntityConverter;
 import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
@@ -133,7 +133,7 @@ public class GeneratorConfigTest {
         assertNotNull(componentInfo.getConverterComponent());
         assertNotNull(componentInfo.getConverterComponent().getEntityConverterContext());
         assertTrue(componentInfo.getConverterComponent().getEntityConverterContext().getEntityConverterStrategy()
-            instanceof JpaEntityConverterStrategy);
+            instanceof JpaEntityConverter);
         assertTrue(enableSwitch.getGenerateEntity());
         assertFalse(enableSwitch.getGenerateDTO());
         assertFalse(enableSwitch.getGenerateRepo());

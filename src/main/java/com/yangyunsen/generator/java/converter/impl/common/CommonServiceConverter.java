@@ -15,7 +15,7 @@ import java.util.List;
  * @author CloudS3n
  * @date 2021-10-09 14:12
  */
-public class CommonServiceConverterStrategy implements ServiceConverterStrategy {
+public class CommonServiceConverter implements ServiceConverterStrategy {
 
     @Override
     public List<ServiceTemplateData> convert(GeneratorConfig generatorConfig) {

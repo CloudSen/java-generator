@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.impl.jpa.entity;
+package com.yangyunsen.generator.java.converter.impl.jpa;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yangyunsen.generator.java.common.mapping.DefaultJavaTypePkgMapping;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author clouds3n
  * @date 2021-09-27
  */
-public class JpaEntityConverterStrategy implements EntityConverterStrategy {
+public class JpaEntityConverter implements EntityConverterStrategy {
 
     @Override
     public List<EntityTemplateData> convert(GeneratorConfig generatorConfig, Map<String, List<OracleColumnInfo>> tableColumnsMap) {

@@ -17,7 +17,7 @@ import java.util.List;
  * @author CloudS3n
  * @date 2021-10-09 09:22
  */
-public class CommonControllerConverterStrategy implements ControllerConverterStrategy {
+public class CommonControllerConverter implements ControllerConverterStrategy {
     @Override
     public List<ControllerTemplateData> convert(GeneratorConfig generatorConfig) {
         List<ControllerTemplateData> controllerTemplateDataList = new ArrayList<>();

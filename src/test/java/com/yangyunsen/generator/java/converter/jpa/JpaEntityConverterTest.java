@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @author clouds3n
  * @date 2021-09-27
  */
-class JpaEntityConverterStrategyTest {
+class JpaEntityConverterTest {
 
     @Test
     void convert() {
