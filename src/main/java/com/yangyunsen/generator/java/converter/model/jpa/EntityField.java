@@ -16,6 +16,10 @@ import lombok.experimental.Accessors;
 public class EntityField {
 
     /**
+     * 表名
+     */
+    private String tableName;
+    /**
      * 是否为主键
      */
     private Boolean pkFlg;

@@ -8,6 +8,7 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
 import com.yangyunsen.generator.java.converter.model.ServiceTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
@@ -16,9 +17,11 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +35,8 @@ class ConverterTest {
     public static final PackageInfo PACKAGE_INFO = new PackageInfo()
         .setEntityPkgName("com.yangyunsen.test")
         .setControllerPkgName("com.yangyunsen.test.controller")
-        .setServicePkgName("com.yangyunsen.test.service");
+        .setServicePkgName("com.yangyunsen.test.service")
+        .setRepoPkgName("com.yangyunsen.test.repository");
     public static final DatabaseInfo DATABASE_INFO = new DatabaseInfo()
         .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
         .setUsername("CQDX_JXGLXX")
@@ -169,7 +173,7 @@ class ConverterTest {
         });
     }
 
-    @Order(3)
+    @Order(4)
     @Test
     @DisplayName("多表Service接口模板数据转换")
     void convertServiceTwoTable() {
@@ -187,6 +191,40 @@ class ConverterTest {
                 }
                 assertEquals("CloudS3n", data.getAuthor());
                 assertEquals("com.yangyunsen.test.service", data.getPkgName());
+            });
+        });
+    }
+
+    @Order(5)
+    @Test
+    @DisplayName("多表Repo接口模板数据转换")
+    void convertRepoTwoTable() {
+        GENERATOR_CONFIG.setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"));
+        assertDoesNotThrow(() -> {
+            Map<String, List<OracleColumnInfo>> columnInfo = DbLoader.getColumnInfo(GENERATOR_CONFIG);
+            Map<String, String> tablePkTypeMap = Converter.convertEntity(GENERATOR_CONFIG, columnInfo).stream()
+                .map(EntityTemplateData::getFields)
+                .flatMap(Collection::stream)
+                .filter(entityField -> BooleanUtils.isTrue(entityField.getPkFlg()))
+                .collect(Collectors.toMap(EntityField::getTableName, EntityField::getJavaType));
+            List<RepoTemplateData> repoTemplateData = Converter.convertRepo(GENERATOR_CONFIG, tablePkTypeMap);
+            assertNotNull(repoTemplateData);
+            // 生成两个Repo
+            assertEquals(2, repoTemplateData.size());
+            repoTemplateData.forEach(data -> {
+                if (!StringUtils.contains(data.getClassName(), "2")) {
+                    assertEquals("TestGeneratorRepository", data.getClassName());
+                    assertEquals("com.yangyunsen.test.model.entity.TestGeneratorEntity", data.getEntityPkgName());
+                    assertEquals("TestGeneratorEntity", data.getEntityClassName());
+                    assertEquals("String", data.getPkJavaType());
+                } else {
+                    assertEquals("TestGenerator2Repository", data.getClassName());
+                    assertEquals("com.yangyunsen.test.model.entity.TestGenerator2Entity", data.getEntityPkgName());
+                    assertEquals("TestGenerator2Entity", data.getEntityClassName());
+                    assertEquals("String", data.getPkJavaType());
+                }
+                assertEquals("CloudS3n", data.getAuthor());
+                assertEquals("com.yangyunsen.test.repository", data.getPkgName());
             });
         });
     }

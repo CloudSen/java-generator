@@ -39,7 +39,7 @@ public final class CommonStatic {
 
     //<editor-fold desc="mvc package name">
 
-    public static final String ENTITY_PKG_NAME = "entity";
+    public static final String ENTITY_PKG_NAME = "model.entity";
     public static final String MODEL_DTO_PKG_NAME = "model.dto";
     public static final String REPO_PKG_NAME = "repository";
     public static final String REPO_IMPL_PKG_NAME = "repository.impl";

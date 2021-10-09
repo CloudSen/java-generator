@@ -10,9 +10,13 @@ import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
 import com.yangyunsen.generator.java.converter.model.common.CommonControllerTemplateData;
+import com.yangyunsen.generator.java.converter.model.common.CommonServiceTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.JpaRepoTemplateData;
+import com.yangyunsen.generator.java.util.GeneratorDateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -38,7 +42,9 @@ class FileWriterTest implements FileCleaner {
         .setDriverPkgName(JdbcDriverPkgName.ORACLE);
     private static final PackageInfo PACKAGE_INFO = new PackageInfo()
         .setEntityPkgName("com.yangyunsen.generator.java.entity")
-        .setControllerPkgName("com.yangyunsen.generator.java.controller");
+        .setControllerPkgName("com.yangyunsen.generator.java.controller")
+        .setServicePkgName("com.yangyunsen.generator.java.service")
+        .setRepoPkgName("com.yangyunsen.generator.java.repository");
     private static final GeneratorConfig GENERATOR_CONFIG = GeneratorConfig.builder()
         .author("CloudS3n")
         .mode(Mode.JPA)
@@ -106,6 +112,58 @@ class FileWriterTest implements FileCleaner {
                 .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
                 .forEach(FILE_PATHS::add);
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(ctrlTempDataList), MvcLevel.CONTROLLER);
+        });
+    }
+
+    @Order(3)
+    @Test
+    @DisplayName("写Service文件")
+    void writeServiceToDisk() {
+        assertDoesNotThrow(() -> {
+            List<CommonServiceTemplateData> serviceTempDataList = Arrays.asList(
+                new CommonServiceTemplateData().setAuthor("clouds3n")
+                    .setClassName("TestGeneratorService")
+                    .setPkgName("com.yangyunsen.generator.java.service")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate()),
+                new CommonServiceTemplateData().setAuthor("clouds3n")
+                    .setClassName("TestGenerator2Service")
+                    .setPkgName("com.yangyunsen.generator.java.service")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate())
+            );
+            serviceTempDataList.stream().map(CommonServiceTemplateData::getPkgName)
+                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
+                .forEach(FILE_PATHS::add);
+            FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(serviceTempDataList), MvcLevel.SERVICE);
+        });
+    }
+
+    @Order(4)
+    @Test
+    @DisplayName("写JPA Repo文件")
+    void writeRepoToDisk() {
+        assertDoesNotThrow(() -> {
+            List<RepoTemplateData> repoTempDataList = Arrays.asList(
+                new JpaRepoTemplateData()
+                    .setAuthor("clouds3n")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate())
+                    .setClassName("TestGeneratorRepo")
+                    .setPkJavaType("String")
+                    .setPkgName("com.yangyunsen.generator.java.repository")
+                    .setEntityPkgName("com.yangyunsen.generator.java.model.entity.TestGeneratorEntity")
+                    .setEntityClassName("TestGeneratorEntity"),
+                new JpaRepoTemplateData()
+                    .setAuthor("clouds3n")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate())
+                    .setClassName("TestGenerator2Repo")
+                    .setPkJavaType("String")
+                    .setPkgName("com.yangyunsen.generator.java.repository")
+                    .setEntityPkgName("com.yangyunsen.generator.java.model.entity.TestGenerator2Entity")
+                    .setEntityClassName("TestGenerator2Entity")
+            );
+            repoTempDataList.stream().map(RepoTemplateData::getPkgName)
+                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
+                .forEach(FILE_PATHS::add);
+            FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(repoTempDataList), MvcLevel.REPO);
         });
     }
 

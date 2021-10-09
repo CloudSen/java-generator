@@ -5,10 +5,12 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.converter.ControllerConverterContext;
 import com.yangyunsen.generator.java.converter.EntityConverterContext;
+import com.yangyunsen.generator.java.converter.RepoConverterContext;
 import com.yangyunsen.generator.java.converter.ServiceConverterContext;
 import com.yangyunsen.generator.java.converter.impl.common.CommonControllerConverterStrategy;
 import com.yangyunsen.generator.java.converter.impl.common.CommonServiceConverterStrategy;
 import com.yangyunsen.generator.java.converter.impl.jpa.entity.JpaEntityConverterStrategy;
+import com.yangyunsen.generator.java.converter.impl.jpa.repo.JpaRepoConverter;
 import com.yangyunsen.generator.java.dbloader.DbLoaderContext;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleDatabaseLoaderStrategy;
 import com.yangyunsen.generator.java.validator.GeneratorConfigValidator;
@@ -88,7 +90,8 @@ public class GeneratorConfig {
                 ConverterComponent converterComponent = new ConverterComponent()
                     .setEntityConverterContext(new EntityConverterContext(mode == Mode.JPA ? new JpaEntityConverterStrategy() : null))
                     .setControllerConverterContext(new ControllerConverterContext(new CommonControllerConverterStrategy()))
-                    .setServiceConverterContext(new ServiceConverterContext(new CommonServiceConverterStrategy()));
+                    .setServiceConverterContext(new ServiceConverterContext(new CommonServiceConverterStrategy()))
+                    .setRepoConverterContext(new RepoConverterContext(mode == Mode.JPA ? new JpaRepoConverter() : null));
                 DatabaseInfo databaseInfo = fragmentaryConfig.getDatabaseInfo();
                 JdbcDriverPkgName driverPkgName = databaseInfo.getDriverPkgName();
                 DbLoaderContext dbLoaderContext;

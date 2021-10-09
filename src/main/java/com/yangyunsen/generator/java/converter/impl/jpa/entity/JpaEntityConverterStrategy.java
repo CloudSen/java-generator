@@ -47,7 +47,8 @@ public class JpaEntityConverterStrategy implements EntityConverterStrategy {
                     if (StringUtils.isNotBlank(javaTypePkgMapping.getPkgName())) {
                         importPkgNames.add(javaTypePkgMapping.getPkgName());
                     }
-                    entityFields.add(new EntityField().setPkFlg(columnInfo.getPkFlag())
+                    entityFields.add(new EntityField().setTableName(tableName)
+                        .setPkFlg(columnInfo.getPkFlag())
                         .setDbName(columnInfo.getColumnName())
                         .setJavaType(javaTypePkgMapping.getJavaType())
                         .setJavaName(GeneratorStringUtil.dbColumnNameToJavaName(columnInfo.getColumnName())));

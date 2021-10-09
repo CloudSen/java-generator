@@ -1,7 +1,7 @@
 package ${pkgName};
 
-import ${interfacePkgName}
-import ${repoPkgName}
+import ${interfacePkgName};
+import ${repoPkgName};
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
