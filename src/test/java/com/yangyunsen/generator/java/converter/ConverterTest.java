@@ -8,6 +8,7 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
+import com.yangyunsen.generator.java.converter.model.ServiceTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
@@ -20,7 +21,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author clouds3n
@@ -31,7 +31,8 @@ class ConverterTest {
 
     public static final PackageInfo PACKAGE_INFO = new PackageInfo()
         .setEntityPkgName("com.yangyunsen.test")
-        .setControllerPkgName("com.yangyunsen.test.controller");
+        .setControllerPkgName("com.yangyunsen.test.controller")
+        .setServicePkgName("com.yangyunsen.test.service");
     public static final DatabaseInfo DATABASE_INFO = new DatabaseInfo()
         .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
         .setUsername("CQDX_JXGLXX")
@@ -146,7 +147,6 @@ class ConverterTest {
     @DisplayName("多表控制器模板数据转换")
     void convertControllerTwoTable() {
         GENERATOR_CONFIG.setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"));
-        Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(GENERATOR_CONFIG);
         assertDoesNotThrow(() -> {
             List<ControllerTemplateData> controllerTemplateData = Converter.convertController(GENERATOR_CONFIG);
             assertNotNull(controllerTemplateData);
@@ -165,6 +165,28 @@ class ConverterTest {
                     assertEquals("com.yangyunsen.test.service.TestGenerator2Service", data.getImportServicePkgName());
                 }
                 assertEquals("com.yangyunsen.test.controller", data.getPkgName());
+            });
+        });
+    }
+
+    @Order(3)
+    @Test
+    @DisplayName("多表Service接口模板数据转换")
+    void convertServiceTwoTable() {
+        GENERATOR_CONFIG.setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"));
+        assertDoesNotThrow(() -> {
+            List<ServiceTemplateData> serviceTempData = Converter.convertService(GENERATOR_CONFIG);
+            assertNotNull(serviceTempData);
+            // 生成两个service
+            assertEquals(2, serviceTempData.size());
+            serviceTempData.forEach(data -> {
+                if (!StringUtils.contains(data.getClassName(), "2")) {
+                    assertEquals("TestGeneratorService", data.getClassName());
+                } else {
+                    assertEquals("TestGenerator2Service", data.getClassName());
+                }
+                assertEquals("CloudS3n", data.getAuthor());
+                assertEquals("com.yangyunsen.test.service", data.getPkgName());
             });
         });
     }
