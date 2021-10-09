@@ -8,14 +8,8 @@ import java.util.List;
  * @author clouds3n
  * @date 2021-09-29
  */
-public interface EntityTemplateData extends ClassCommentTemplateData {
+public interface EntityTemplateData extends ClassCommentTemplateData, CommonTemplateData {
 
-    /**
-     * 获取当前类包名
-     *
-     * @return 当前包名
-     */
-    String getPkgName();
 
     /**
      * 获取要导入的包名
@@ -30,13 +24,6 @@ public interface EntityTemplateData extends ClassCommentTemplateData {
      * @return 表名
      */
     String getTableName();
-
-    /**
-     * 获取当前类的类名
-     *
-     * @return 类名
-     */
-    String getClassName();
 
     /**
      * 获取表字段列表

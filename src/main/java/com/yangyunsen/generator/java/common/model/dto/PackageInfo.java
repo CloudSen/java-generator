@@ -22,7 +22,9 @@ public class PackageInfo implements Serializable {
     private String entityPkgName;
     private String dtoPkgName;
     private String repoPkgName;
+    private String repoImplPkgName;
     private String customRepoPkgName;
+    private String customRepoImplPkgName;
     private String servicePkgName;
     private String serviceImplPkgName;
     private String controllerPkgName;

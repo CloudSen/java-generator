@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RestValidController("/${controllerUrl}")
 public class ${className} {
 
-    private final ${className}Service ${className?uncap_first}Service;
+    private final ${serviceClassName} ${serviceClassName?uncap_first};
 
 
 }

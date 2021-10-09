@@ -5,6 +5,7 @@ import com.yangyunsen.generator.java.common.mapping.DefaultJavaTypePkgMapping;
 import com.yangyunsen.generator.java.common.mapping.JavaTypePkgMapping;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
+import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.EntityConverterStrategy;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
@@ -12,15 +13,15 @@ import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import com.yangyunsen.generator.java.util.GeneratorDateUtil;
+import com.yangyunsen.generator.java.util.GeneratorStringUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.CaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * ORM实体类转换器
+ * ORM JPA实体类转换器
  *
  * @author clouds3n
  * @date 2021-09-27
@@ -37,7 +38,7 @@ public class JpaEntityConverterStrategy implements EntityConverterStrategy {
                 .setCreateDate(GeneratorDateUtil.getCommentDate())
                 .setPkgName(packageInfo.getEntityPkgName())
                 .setTableName(tableName)
-                .setClassName(CaseUtils.toCamelCase(tableName, true, CommonStatic.UL_C) + CommonStatic.ENTITY_CLASS_SUFFIX);
+                .setClassName(GeneratorStringUtil.tableNameToClassName(tableName, MvcLevel.ENTITY));
             if (CollectionUtil.isNotEmpty(columns)) {
                 List<EntityField> entityFields = new ArrayList<>();
                 List<String> importPkgNames = new ArrayList<>();
@@ -49,7 +50,7 @@ public class JpaEntityConverterStrategy implements EntityConverterStrategy {
                     entityFields.add(new EntityField().setPkFlg(columnInfo.getPkFlag())
                         .setDbName(columnInfo.getColumnName())
                         .setJavaType(javaTypePkgMapping.getJavaType())
-                        .setJavaName(CaseUtils.toCamelCase(columnInfo.getColumnName(), false, CommonStatic.UL_C)));
+                        .setJavaName(GeneratorStringUtil.dbColumnNameToJavaName(columnInfo.getColumnName())));
                 });
                 jpaEntityTemplateData.setImportPkgNames(importPkgNames)
                     .setFields(entityFields);

@@ -35,6 +35,10 @@ public class CommonControllerTemplateData implements ControllerTemplateData {
      */
     private String className;
     /**
+     * 依赖service的类名
+     */
+    private String serviceClassName;
+    /**
      * 作者
      */
     private String author;
