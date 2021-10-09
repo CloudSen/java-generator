@@ -20,4 +20,11 @@ public interface ControllerTemplateData extends ClassCommentTemplateData, Common
      * @return 控制器URL前缀
      */
     String getControllerUrl();
+
+    /**
+     * 获取Service接口类名
+     *
+     * @return Service接口类名
+     */
+    String getServiceClassName();
 }

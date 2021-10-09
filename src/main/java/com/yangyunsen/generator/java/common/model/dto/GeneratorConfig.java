@@ -3,7 +3,9 @@ package com.yangyunsen.generator.java.common.model.dto;
 import com.yangyunsen.generator.java.common.GeneratorException;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
+import com.yangyunsen.generator.java.converter.ControllerConverterContext;
 import com.yangyunsen.generator.java.converter.EntityConverterContext;
+import com.yangyunsen.generator.java.converter.impl.common.CommonControllerConverterStrategy;
 import com.yangyunsen.generator.java.converter.impl.jpa.entity.JpaEntityConverterStrategy;
 import com.yangyunsen.generator.java.dbloader.DbLoaderContext;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleDatabaseLoaderStrategy;
@@ -82,7 +84,8 @@ public class GeneratorConfig {
             }
             if (fragmentaryConfig.getComponentInfo() == null) {
                 ConverterComponent converterComponent = new ConverterComponent()
-                    .setEntityConverterContext(new EntityConverterContext(mode == Mode.JPA ? new JpaEntityConverterStrategy() : null));
+                    .setEntityConverterContext(new EntityConverterContext(mode == Mode.JPA ? new JpaEntityConverterStrategy() : null))
+                    .setControllerConverterContext(new ControllerConverterContext(new CommonControllerConverterStrategy()));
                 DatabaseInfo databaseInfo = fragmentaryConfig.getDatabaseInfo();
                 JdbcDriverPkgName driverPkgName = databaseInfo.getDriverPkgName();
                 DbLoaderContext dbLoaderContext;

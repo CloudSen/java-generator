@@ -6,9 +6,7 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.converter.impl.jpa.entity.JpaEntityConverterStrategy;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.Set;
@@ -21,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author CloudS3n
  * @date 2021-10-08 22:50
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GeneratorConfigTest {
 
     @Order(1)

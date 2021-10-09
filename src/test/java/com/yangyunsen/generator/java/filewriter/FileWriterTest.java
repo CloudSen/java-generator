@@ -14,10 +14,7 @@ import com.yangyunsen.generator.java.converter.model.common.CommonControllerTemp
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
  * @date 2021-09-30 14:25
  */
 @Slf4j
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FileWriterTest implements FileCleaner {
 
     private static final Set<String> FILE_PATHS = new HashSet<>();
