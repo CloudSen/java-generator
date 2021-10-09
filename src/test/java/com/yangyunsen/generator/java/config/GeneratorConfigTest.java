@@ -5,7 +5,10 @@ import com.yangyunsen.generator.java.common.model.dto.*;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
+import com.yangyunsen.generator.java.converter.impl.common.CommonControllerConverter;
+import com.yangyunsen.generator.java.converter.impl.common.CommonServiceConverter;
 import com.yangyunsen.generator.java.converter.impl.jpa.JpaEntityConverter;
+import com.yangyunsen.generator.java.converter.impl.jpa.JpaRepoConverter;
 import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
@@ -130,10 +133,16 @@ public class GeneratorConfigTest {
         assertNotNull(config.getPackageInfo());
         assertNotNull(componentInfo);
         assertNotNull(enableSwitch);
-        assertNotNull(componentInfo.getConverterComponent());
-        assertNotNull(componentInfo.getConverterComponent().getEntityConverterContext());
-        assertTrue(componentInfo.getConverterComponent().getEntityConverterContext().getEntityConverterStrategy()
-            instanceof JpaEntityConverter);
+        ConverterComponent converterComponent = componentInfo.getConverterComponent();
+        assertNotNull(converterComponent);
+        assertNotNull(converterComponent.getEntityConverterContext());
+        assertTrue(converterComponent.getEntityConverterContext().getEntityConverterStrategy() instanceof JpaEntityConverter);
+        assertNotNull(converterComponent.getControllerConverterContext());
+        assertTrue(converterComponent.getControllerConverterContext().getControllerConverterStrategy() instanceof CommonControllerConverter);
+        assertNotNull(converterComponent.getServiceConverterContext());
+        assertTrue(converterComponent.getServiceConverterContext().getServiceConverterStrategy() instanceof CommonServiceConverter);
+        assertNotNull(converterComponent.getRepoConverterContext());
+        assertTrue(converterComponent.getRepoConverterContext().getRepoConverterStrategy() instanceof JpaRepoConverter);
         assertTrue(enableSwitch.getGenerateEntity());
         assertFalse(enableSwitch.getGenerateDTO());
         assertFalse(enableSwitch.getGenerateRepo());
