@@ -14,7 +14,7 @@ import java.util.List;
 public interface ServiceConverterStrategy {
 
     /**
-     * 提取全局配置，生成控制器模板数据s
+     * 提取全局配置，生成控制器模板数据
      *
      * @param generatorConfig 全局配置
      * @return 控制器模板数据列表

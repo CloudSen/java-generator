@@ -1,9 +1,6 @@
 package com.yangyunsen.generator.java.common.model.dto;
 
-import com.yangyunsen.generator.java.converter.ControllerConverterContext;
-import com.yangyunsen.generator.java.converter.EntityConverterContext;
-import com.yangyunsen.generator.java.converter.RepoConverterContext;
-import com.yangyunsen.generator.java.converter.ServiceConverterContext;
+import com.yangyunsen.generator.java.converter.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +32,11 @@ public class ConverterComponent {
      * Service转换组件配置
      */
     private ServiceConverterContext serviceConverterContext;
+
+    /**
+     * ServiceImpl转换组件配置
+     */
+    private ServiceImplConverterContext serviceImplConverterContext;
 
     /**
      * 控制器转换组件配置

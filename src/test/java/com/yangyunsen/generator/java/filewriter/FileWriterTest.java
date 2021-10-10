@@ -11,11 +11,13 @@ import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
 import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
+import com.yangyunsen.generator.java.converter.model.ServiceImplTemplateData;
 import com.yangyunsen.generator.java.converter.model.common.CommonControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.common.CommonServiceTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaRepoTemplateData;
+import com.yangyunsen.generator.java.converter.model.jpa.JpaServiceImplTemplateData;
 import com.yangyunsen.generator.java.util.GeneratorDateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -44,6 +46,7 @@ class FileWriterTest implements FileCleaner {
         .setEntityPkgName("com.yangyunsen.generator.java.entity")
         .setControllerPkgName("com.yangyunsen.generator.java.controller")
         .setServicePkgName("com.yangyunsen.generator.java.service")
+        .setServiceImplPkgName("com.yangyunsen.generator.java.service.impl")
         .setRepoPkgName("com.yangyunsen.generator.java.repository");
     private static final GeneratorConfig GENERATOR_CONFIG = GeneratorConfig.builder()
         .author("CloudS3n")
@@ -137,7 +140,37 @@ class FileWriterTest implements FileCleaner {
         });
     }
 
-    @Order(4)
+    @Order(3)
+    @Test
+    @DisplayName("写ServiceImpl文件")
+    void writeServiceImplToDisk() {
+        assertDoesNotThrow(() -> {
+            List<ServiceImplTemplateData> serviceTempDataList = Arrays.asList(
+                new JpaServiceImplTemplateData().setAuthor("clouds3n")
+                    .setPkgName("com.yangyunsen.generator.java.service.impl")
+                    .setServicePkgName("com.yangyunsen.generator.java.service.TestGeneratorService")
+                    .setRepoPkgName("com.yangyunsen.generator.java.service.TestGeneratorRepo")
+                    .setClassName("TestGeneratorServiceImpl")
+                    .setServiceClassName("TestGeneratorService")
+                    .setRepoClassName("TestGeneratorRepository")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate()),
+                new JpaServiceImplTemplateData().setAuthor("clouds3n")
+                    .setPkgName("com.yangyunsen.generator.java.service.impl")
+                    .setServicePkgName("com.yangyunsen.generator.java.service.TestGeneratorService")
+                    .setRepoPkgName("com.yangyunsen.generator.java.service.TestGeneratorRepo")
+                    .setClassName("TestGenerator2ServiceImpl")
+                    .setServiceClassName("TestGenerator2Service")
+                    .setRepoClassName("TestGenerator2Repository")
+                    .setCreateDate(GeneratorDateUtil.getCommentDate())
+            );
+            serviceTempDataList.stream().map(ServiceImplTemplateData::getPkgName)
+                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
+                .forEach(FILE_PATHS::add);
+            FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(serviceTempDataList), MvcLevel.SERVICE_IMPL);
+        });
+    }
+
+    @Order(5)
     @Test
     @DisplayName("写JPA Repo文件")
     void writeRepoToDisk() {
@@ -146,7 +179,7 @@ class FileWriterTest implements FileCleaner {
                 new JpaRepoTemplateData()
                     .setAuthor("clouds3n")
                     .setCreateDate(GeneratorDateUtil.getCommentDate())
-                    .setClassName("TestGeneratorRepo")
+                    .setClassName("TestGeneratorRepository")
                     .setPkJavaType("String")
                     .setPkgName("com.yangyunsen.generator.java.repository")
                     .setEntityPkgName("com.yangyunsen.generator.java.model.entity.TestGeneratorEntity")
@@ -154,7 +187,7 @@ class FileWriterTest implements FileCleaner {
                 new JpaRepoTemplateData()
                     .setAuthor("clouds3n")
                     .setCreateDate(GeneratorDateUtil.getCommentDate())
-                    .setClassName("TestGenerator2Repo")
+                    .setClassName("TestGenerator2Repository")
                     .setPkJavaType("String")
                     .setPkgName("com.yangyunsen.generator.java.repository")
                     .setEntityPkgName("com.yangyunsen.generator.java.model.entity.TestGenerator2Entity")

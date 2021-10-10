@@ -11,7 +11,7 @@ public interface ServiceImplTemplateData extends ClassCommentTemplateData, Commo
      *
      * @return Service接口包名
      */
-    String getInterfacePkgName();
+    String getServicePkgName();
 
     /**
      * 获取持久层接口包名
@@ -25,5 +25,12 @@ public interface ServiceImplTemplateData extends ClassCommentTemplateData, Commo
      *
      * @return service接口类名
      */
-    String getInterfaceClassName();
+    String getServiceClassName();
+
+    /**
+     * 获取持久层接口类名
+     *
+     * @return 持久层接口类名
+     */
+    String getRepoClassName();
 }

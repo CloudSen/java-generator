@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.model.common;
+package com.yangyunsen.generator.java.converter.model.jpa;
 
 import com.yangyunsen.generator.java.converter.model.ServiceImplTemplateData;
 import lombok.AllArgsConstructor;
@@ -7,37 +7,39 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * 通用ServiceImpl模板数据类
- *
- * @author CloudS3n
- * @date 2021-10-08 13:14
+ * @author clouds3n
+ * @date 2021-10-10
  */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonServiceImplTemplateData implements ServiceImplTemplateData {
+public class JpaServiceImplTemplateData implements ServiceImplTemplateData {
 
     /**
      * 包名
      */
     private String pkgName;
     /**
-     * service接口包名
+     * service包名
      */
-    private String interfacePkgName;
+    private String servicePkgName;
     /**
-     * 持久层仓库包名
+     * repo包名
      */
     private String repoPkgName;
     /**
-     * serviceImpl类名
+     * 类名
      */
     private String className;
     /**
-     * service接口类名
+     * service类名
      */
-    private String interfaceClassName;
+    private String serviceClassName;
+    /**
+     * repo类名
+     */
+    private String repoClassName;
     /**
      * 作者
      */
@@ -46,5 +48,4 @@ public class CommonServiceImplTemplateData implements ServiceImplTemplateData {
      * 生成时间
      */
     private String createDate;
-
 }

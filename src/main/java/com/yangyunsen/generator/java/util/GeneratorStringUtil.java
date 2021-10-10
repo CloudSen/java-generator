@@ -59,7 +59,7 @@ public class GeneratorStringUtil {
         return currentPkgName.substring(0, currentPkgName.lastIndexOf(CommonStatic.DOT));
     }
 
-    public static String getBrotherMvcClassName(String parentPkgName, String tableName, MvcLevel wantedMvcLevel) {
+    public static String getBrotherMvcPkgName(String parentPkgName, String tableName, MvcLevel wantedMvcLevel) {
         switch (wantedMvcLevel) {
             case ENTITY:
                 return parentPkgName + CommonStatic.DOT + CommonStatic.ENTITY_PKG_NAME + CommonStatic.DOT

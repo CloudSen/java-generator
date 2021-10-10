@@ -6,10 +6,7 @@ import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
-import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
-import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
-import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
-import com.yangyunsen.generator.java.converter.model.ServiceTemplateData;
+import com.yangyunsen.generator.java.converter.model.*;
 import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
@@ -36,6 +33,7 @@ class ConverterTest {
         .setEntityPkgName("com.yangyunsen.test")
         .setControllerPkgName("com.yangyunsen.test.controller")
         .setServicePkgName("com.yangyunsen.test.service")
+        .setServiceImplPkgName("com.yangyunsen.test.service.impl")
         .setRepoPkgName("com.yangyunsen.test.repository");
     public static final DatabaseInfo DATABASE_INFO = new DatabaseInfo()
         .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
@@ -196,6 +194,28 @@ class ConverterTest {
     }
 
     @Order(5)
+    @Test
+    @DisplayName("多表ServiceImpl模板数据转换")
+    void convertServiceImplTwoTable() {
+        GENERATOR_CONFIG.setTableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"));
+        assertDoesNotThrow(() -> {
+            List<ServiceImplTemplateData> serviceImplTempData = Converter.convertServiceImpl(GENERATOR_CONFIG);
+            assertNotNull(serviceImplTempData);
+            // 生成两个service impl
+            assertEquals(2, serviceImplTempData.size());
+            serviceImplTempData.forEach(data -> {
+                if (!StringUtils.contains(data.getClassName(), "2")) {
+                    assertEquals("TestGeneratorServiceImpl", data.getClassName());
+                } else {
+                    assertEquals("TestGenerator2ServiceImpl", data.getClassName());
+                }
+                assertEquals("CloudS3n", data.getAuthor());
+                assertEquals("com.yangyunsen.test.service.impl", data.getPkgName());
+            });
+        });
+    }
+
+    @Order(6)
     @Test
     @DisplayName("多表Repo接口模板数据转换")
     void convertRepoTwoTable() {

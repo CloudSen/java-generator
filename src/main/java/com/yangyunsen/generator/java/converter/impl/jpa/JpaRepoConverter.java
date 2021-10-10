@@ -27,7 +27,7 @@ public class JpaRepoConverter implements RepoConverterStrategy {
         generatorConfig.getTableNames().forEach(tableName -> {
             JpaRepoTemplateData jpaRepoTemplateData = new JpaRepoTemplateData()
                 .setPkgName(repoPkgName)
-                .setEntityPkgName(GeneratorStringUtil.getBrotherMvcClassName(parentPkgName, tableName, MvcLevel.ENTITY))
+                .setEntityPkgName(GeneratorStringUtil.getBrotherMvcPkgName(parentPkgName, tableName, MvcLevel.ENTITY))
                 .setClassName(GeneratorStringUtil.tableNameToClassName(tableName, MvcLevel.REPO))
                 .setEntityClassName(GeneratorStringUtil.tableNameToClassName(tableName, MvcLevel.ENTITY))
                 .setPkJavaType(tablePkTypeMap.get(tableName))

@@ -32,10 +32,6 @@ public enum DefaultTemplateMapping implements TemplateMapping {
      * service.ftl
      */
     SERVICE(List.of(Mode.JPA, Mode.MP), MvcLevel.SERVICE, "service.ftl"),
-    /**
-     * service-impl.ftl
-     */
-    JPA_SERVICE_IMPL(List.of(Mode.JPA, Mode.MP), MvcLevel.SERVICE_IMPL, "service-impl.ftl"),
     //</editor-fold>
 
     //<editor-fold desc="jpa">
@@ -55,6 +51,10 @@ public enum DefaultTemplateMapping implements TemplateMapping {
      * jpa-custom-repo-impl.ftl
      */
     JPA_CUSTOM_REPOSITORY_IMPL(List.of(Mode.JPA), MvcLevel.CUSTOM_REPO_IMPL, "jpa-custom-repo-impl.ftl"),
+    /**
+     * jpa-service-impl.ftl
+     */
+    JPA_SERVICE_IMPL(List.of(Mode.JPA), MvcLevel.SERVICE_IMPL, "jpa-service-impl.ftl"),
     //</editor-fold>
 
     //<editor-fold desc="mybatis">
@@ -66,6 +66,10 @@ public enum DefaultTemplateMapping implements TemplateMapping {
      * mp-repo.ftl
      */
     MP_REPOSITORY(List.of(Mode.MP), MvcLevel.REPO, "mp-repo.ftl"),
+    /**
+     * mp-service-impl.ftl
+     */
+    MP_SERVICE_IMPL(List.of(Mode.MP), MvcLevel.SERVICE_IMPL, "mp-service-impl.ftl"),
     //</editor-fold>
     ;
 

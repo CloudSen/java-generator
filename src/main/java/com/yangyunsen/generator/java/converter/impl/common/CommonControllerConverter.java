@@ -26,7 +26,7 @@ public class CommonControllerConverter implements ControllerConverterStrategy {
         String parentPkgName = GeneratorStringUtil.getParentPkgName(controllerPkgName);
         String commentDate = GeneratorDateUtil.getCommentDate();
         generatorConfig.getTableNames().forEach(tableName -> {
-            String importServicePkgName = GeneratorStringUtil.getBrotherMvcClassName(parentPkgName, tableName, MvcLevel.SERVICE);
+            String importServicePkgName = GeneratorStringUtil.getBrotherMvcPkgName(parentPkgName, tableName, MvcLevel.SERVICE);
             String controllerUrl = GeneratorStringUtil.tableNameToControllerUrl(tableName);
             CommonControllerTemplateData templateData = new CommonControllerTemplateData()
                 .setPkgName(controllerPkgName)

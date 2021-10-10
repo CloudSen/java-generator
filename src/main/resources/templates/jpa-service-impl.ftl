@@ -1,6 +1,6 @@
 package ${pkgName};
 
-import ${interfacePkgName};
+import ${servicePkgName};
 import ${repoPkgName};
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 <#include "fileHeader.ftl">
 @Service
 @RequiredArgsConstructor
-public class ${className} implements ${interfaceClassName} {
+public class ${className} implements ${serviceClassName} {
 
-    private final ${className}Repository ${className?uncap_first}Repository;
+private final ${repoClassName} ${repoClassName?uncap_first};
 }

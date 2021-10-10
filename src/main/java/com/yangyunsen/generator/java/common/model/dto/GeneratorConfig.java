@@ -3,14 +3,12 @@ package com.yangyunsen.generator.java.common.model.dto;
 import com.yangyunsen.generator.java.common.GeneratorException;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
-import com.yangyunsen.generator.java.converter.ControllerConverterContext;
-import com.yangyunsen.generator.java.converter.EntityConverterContext;
-import com.yangyunsen.generator.java.converter.RepoConverterContext;
-import com.yangyunsen.generator.java.converter.ServiceConverterContext;
+import com.yangyunsen.generator.java.converter.*;
 import com.yangyunsen.generator.java.converter.impl.common.CommonControllerConverter;
 import com.yangyunsen.generator.java.converter.impl.common.CommonServiceConverter;
 import com.yangyunsen.generator.java.converter.impl.jpa.JpaEntityConverter;
 import com.yangyunsen.generator.java.converter.impl.jpa.JpaRepoConverter;
+import com.yangyunsen.generator.java.converter.impl.jpa.JpaServiceImplConverter;
 import com.yangyunsen.generator.java.dbloader.DbLoaderContext;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleDatabaseLoaderStrategy;
 import com.yangyunsen.generator.java.validator.GeneratorConfigValidator;
@@ -91,7 +89,8 @@ public class GeneratorConfig {
                     .setEntityConverterContext(new EntityConverterContext(mode == Mode.JPA ? new JpaEntityConverter() : null))
                     .setControllerConverterContext(new ControllerConverterContext(new CommonControllerConverter()))
                     .setServiceConverterContext(new ServiceConverterContext(new CommonServiceConverter()))
-                    .setRepoConverterContext(new RepoConverterContext(mode == Mode.JPA ? new JpaRepoConverter() : null));
+                    .setRepoConverterContext(new RepoConverterContext(mode == Mode.JPA ? new JpaRepoConverter() : null))
+                    .setServiceImplConverterContext(new ServiceImplConverterContext(mode == Mode.JPA ? new JpaServiceImplConverter() : null));
                 DatabaseInfo databaseInfo = fragmentaryConfig.getDatabaseInfo();
                 JdbcDriverPkgName driverPkgName = databaseInfo.getDriverPkgName();
                 DbLoaderContext dbLoaderContext;
