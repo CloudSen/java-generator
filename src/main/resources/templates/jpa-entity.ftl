@@ -1,7 +1,13 @@
 package ${pkgName};
 
-<#if typePkgNames?has_content>
-    <#list typePkgNames as typePkgName>
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+<#if importPkgNames?has_content>
+    <#list importPkgNames as typePkgName>
         import ${typePkgName};
     </#list>
 </#if>
@@ -11,7 +17,7 @@ package ${pkgName};
 @Entity
 @Accessors(chain = true)
 @Table(name="${tableName}")
-public class ${className}Entity {
+public class ${className} {
 <#list fields as field>
 
     <#if field.pkFlg!false>

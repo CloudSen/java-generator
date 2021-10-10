@@ -5,10 +5,7 @@ import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -20,6 +17,7 @@ import java.io.Writer;
  * @author clouds3n
  * @date 2021-09-23
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FreeMarkerConfigTest {
 
     @Test

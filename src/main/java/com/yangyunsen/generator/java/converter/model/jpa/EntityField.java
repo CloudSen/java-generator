@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.converter.jpa.model;
+package com.yangyunsen.generator.java.converter.model.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +15,10 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 public class EntityField {
 
+    /**
+     * 表名
+     */
+    private String tableName;
     /**
      * 是否为主键
      */

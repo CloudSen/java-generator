@@ -2,8 +2,11 @@ package com.yangyunsen.generator.java.dbloader;
 
 import com.yangyunsen.generator.java.common.GeneratorException;
 import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
+import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
+import com.yangyunsen.generator.java.common.model.dto.PackageInfo;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
+import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import org.apache.commons.lang3.BooleanUtils;
 import org.junit.jupiter.api.Assertions;
@@ -24,13 +27,23 @@ class DbLoaderTest {
     @Test
     @DisplayName("数据库加载器-加载不支持的数据库")
     void loadNotSupportedDb() {
-        DatabaseInfo databaseInfo = new DatabaseInfo()
-            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
-            .setUsername("CQDX_JXGLXX")
-            .setPasswd("cquisse")
-            .setDriverPkgName(JdbcDriverPkgName.MYSQL);
-        Set<String> tables = Set.of("TEST_GENERATOR");
-        Assertions.assertThrows(GeneratorException.class, () -> DbLoader.getColumnInfo(databaseInfo, tables));
+        Assertions.assertThrows(GeneratorException.class, () -> {
+            DatabaseInfo databaseInfo = new DatabaseInfo()
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUsername("CQDX_JXGLXX")
+                .setPasswd("cquisse")
+                .setDriverPkgName(JdbcDriverPkgName.POSTGRE_SQL);
+            PackageInfo packageInfo = new PackageInfo()
+                .setEntityPkgName("com.yangyunsen.demo.entity");
+            GeneratorConfig generatorConfig = GeneratorConfig.builder()
+                .author("CloudS3n")
+                .mode(Mode.JPA)
+                .tableNames(Set.of("TEST_GENERATOR"))
+                .databaseInfo(databaseInfo)
+                .packageInfo(packageInfo)
+                .build();
+            DbLoader.getColumnInfo(generatorConfig);
+        });
     }
 
     @Test
@@ -42,9 +55,17 @@ class DbLoaderTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        Set<String> tables = Set.of("TEST_GENERATOR");
+        PackageInfo packageInfo = new PackageInfo()
+            .setEntityPkgName("com.yangyunsen.demo.entity");
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Assertions.assertDoesNotThrow(() -> {
-            Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(databaseInfo, tables);
+            Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
             Assertions.assertNotNull(tableColumnsMap);
             Assertions.assertEquals(1, tableColumnsMap.keySet().size());
             Assertions.assertEquals(3, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());
@@ -62,9 +83,17 @@ class DbLoaderTest {
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
-        Set<String> tables = Set.of("TEST_GENERATOR", "TEST_GENERATOR2");
+        PackageInfo packageInfo = new PackageInfo()
+            .setEntityPkgName("com.yangyunsen.demo.entity");
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+            .author("CloudS3n")
+            .mode(Mode.JPA)
+            .tableNames(Set.of("TEST_GENERATOR", "TEST_GENERATOR2"))
+            .databaseInfo(databaseInfo)
+            .packageInfo(packageInfo)
+            .build();
         Assertions.assertDoesNotThrow(() -> {
-            Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(databaseInfo, tables);
+            Map<String, List<OracleColumnInfo>> tableColumnsMap = DbLoader.getColumnInfo(generatorConfig);
             Assertions.assertNotNull(tableColumnsMap);
             Assertions.assertEquals(2, tableColumnsMap.keySet().size());
             Assertions.assertEquals(6, tableColumnsMap.values().stream().mapToLong(Collection::size).sum());

@@ -27,6 +27,7 @@
     <mariadb.version>2.7.4</mariadb.version>
     <pgsql.version>42.2.24</pgsql.version>
     <commons.text.version>1.9</commons.text.version>
+    <commons.collection.version>4.4</commons.collection.version>
   </properties>
   <dependencies>
     <dependency>
@@ -110,6 +111,11 @@
       <artifactId>commons-text</artifactId>
       <version>${commons.text.version}</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>${commons.collection.version}</version>
     </dependency>
   </dependencies>
 
