@@ -30,9 +30,13 @@ public class EnableSwitch {
      */
     private Boolean generateRepo = true;
     /**
-     * 是否生成RepositoryImpl
+     * 是否生成自定义Repository
      */
     private Boolean generateCustomRepo = true;
+    /**
+     * 是否生成自定义RepositoryImpl
+     */
+    private Boolean generateCustomRepoImpl = true;
     /**
      * 是否生成Service
      */

@@ -79,6 +79,7 @@ public class GeneratorConfig {
                     .setGenerateDTO(StringUtils.isNotBlank(packageInfo.getDtoPkgName()))
                     .setGenerateRepo(StringUtils.isNotBlank(packageInfo.getRepoPkgName()))
                     .setGenerateCustomRepo(StringUtils.isNotBlank(packageInfo.getCustomRepoPkgName()))
+                    .setGenerateCustomRepoImpl(StringUtils.isNotBlank(packageInfo.getCustomRepoImplPkgName()))
                     .setGenerateService(StringUtils.isNotBlank(packageInfo.getServicePkgName()))
                     .setGenerateServiceImpl(StringUtils.isNotBlank(packageInfo.getServiceImplPkgName()))
                     .setGenerateController(StringUtils.isNotBlank(packageInfo.getControllerPkgName()));

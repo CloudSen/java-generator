@@ -1,11 +1,9 @@
 package com.yangyunsen.generator.java.dbloader;
 
-import com.yangyunsen.generator.java.common.GeneratorException;
 import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
-import com.yangyunsen.generator.java.dbloader.oracle.OracleDatabaseLoaderStrategy;
 
 import java.util.List;
 import java.util.Map;
@@ -23,10 +21,7 @@ public class DbLoader {
         final DatabaseInfo databaseInfo = generatorConfig.getDatabaseInfo();
         final Set<String> tableNames = generatorConfig.getTableNames();
         JdbcDriverPkgName driverPkgName = databaseInfo.getDriverPkgName();
-        if (driverPkgName == JdbcDriverPkgName.ORACLE) {
-            return new DbLoaderContext(new OracleDatabaseLoaderStrategy(databaseInfo)).getMultiTableInfo(tableNames);
-        } else {
-            throw new GeneratorException("暂不支持" + driverPkgName.name() + "数据库的代码生成");
-        }
+        DbLoaderContext dbLoaderContext = generatorConfig.getComponentInfo().getDbLoaderContext();
+        return dbLoaderContext.getMultiTableInfo(tableNames);
     }
 }

@@ -1,5 +1,6 @@
 package com.yangyunsen.generator.java.filewriter;
 
+import com.yangyunsen.generator.java.FileCleaner;
 import com.yangyunsen.generator.java.common.model.dto.DatabaseInfo;
 import com.yangyunsen.generator.java.common.model.dto.GeneratorConfig;
 import com.yangyunsen.generator.java.common.model.dto.PackageInfo;

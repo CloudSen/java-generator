@@ -1,4 +1,4 @@
-package com.yangyunsen.generator.java.filewriter;
+package com.yangyunsen.generator.java;
 
 import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import org.apache.commons.lang3.SystemUtils;
