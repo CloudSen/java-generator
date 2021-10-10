@@ -1,9 +1,5 @@
 package com.yangyunsen.generator.java.generator;
 
-import freemarker.template.TemplateException;
-
-import java.io.IOException;
-
 /**
  * 生成器
  *
@@ -19,74 +15,50 @@ public interface Generator {
 
     /**
      * 生成ORM Entity类文件
-     *
-     * @throws TemplateException 代码模板
-     * @throws IOException       文件读取异常
      */
-    default void generateEntity() throws TemplateException, IOException {
+    default void generateEntity() {
     }
 
     /**
      * 生成DTO类文件
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateDTO() throws TemplateException, IOException {
+    default void generateDTO() {
     }
 
     /**
      * 生成Repo接口类文件
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateRepo() throws TemplateException, IOException {
+    default void generateRepo() {
     }
 
     /**
      * 生成Custom Repo接口类文件 for native jpa
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateCustomRepo() throws TemplateException, IOException {
+    default void generateCustomRepo() {
     }
 
     /**
      * 生成Custom RepoImpl类文件 for native jpa
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateCustomRepoImpl() throws TemplateException, IOException {
+    default void generateCustomRepoImpl() {
     }
 
     /**
      * 生成Service接口类文件
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateService() throws TemplateException, IOException {
+    default void generateService() {
     }
 
     /**
      * 生成ServiceImpl接口类文件
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateServiceImpl() throws TemplateException, IOException {
+    default void generateServiceImpl() {
     }
 
     /**
      * 生成Controller接口类文件
-     *
-     * @throws TemplateException 模板异常
-     * @throws IOException       文件读取异常
      */
-    default void generateController() throws TemplateException, IOException {
+    default void generateController() {
     }
 
 }

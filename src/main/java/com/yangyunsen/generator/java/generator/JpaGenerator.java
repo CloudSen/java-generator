@@ -10,16 +10,11 @@ import com.yangyunsen.generator.java.converter.model.jpa.EntityField;
 import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import com.yangyunsen.generator.java.filewriter.FileWriter;
-import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,72 +32,93 @@ public class JpaGenerator implements Generator {
 
     @Override
     public void generate() {
+        EnableSwitch enableSwitch = config.getEnableSwitch();
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateEntity())) {
+            generateEntity();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateDTO())) {
+            generateDTO();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateRepo())) {
+            generateRepo();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateCustomRepo())) {
+            generateCustomRepo();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateCustomRepoImpl())) {
+            generateCustomRepoImpl();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateService())) {
+            generateService();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateServiceImpl())) {
+            generateServiceImpl();
+        }
+        if (BooleanUtils.isTrue(enableSwitch.getGenerateController())) {
+            generateController();
+        }
+    }
+
+    @Override
+    public void generateEntity() {
         try {
-            EnableSwitch enableSwitch = config.getEnableSwitch();
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateEntity())) {
-                generateEntity();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateDTO())) {
-                generateDTO();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateRepo())) {
-                generateRepo();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateCustomRepo())) {
-                generateCustomRepo();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateCustomRepoImpl())) {
-                generateCustomRepoImpl();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateService())) {
-                generateService();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateServiceImpl())) {
-                generateServiceImpl();
-            }
-            if (BooleanUtils.isTrue(enableSwitch.getGenerateController())) {
-                generateController();
-            }
+            Map<String, List<OracleColumnInfo>> columnInfo = DbLoader.getColumnInfo(config);
+            List<EntityTemplateData> entityTemplateData = Converter.convertEntity(config, columnInfo);
+            FileWriter.writeFileToDisk(config, new ArrayList<>(entityTemplateData), MvcLevel.ENTITY);
         } catch (Exception e) {
+            log.error("生成ORM实体异常");
             throw new GeneratorException(e);
         }
     }
 
     @Override
-    public void generateEntity() throws TemplateException, IOException {
-        Map<String, List<OracleColumnInfo>> columnInfo = DbLoader.getColumnInfo(config);
-        List<EntityTemplateData> entityTemplateData = Converter.convertEntity(config, columnInfo);
-        FileWriter.writeFileToDisk(config, Collections.singletonList(entityTemplateData), MvcLevel.ENTITY);
+    public void generateRepo() {
+        try {
+            Map<String, List<OracleColumnInfo>> columnInfo = DbLoader.getColumnInfo(config);
+            List<EntityTemplateData> entityTemplateData = Converter.convertEntity(config, columnInfo);
+            Map<String, String> tablePkTypeMap = entityTemplateData.stream()
+                .map(EntityTemplateData::getFields)
+                .flatMap(Collection::stream)
+                .filter(entityField -> BooleanUtils.isTrue(entityField.getPkFlg()))
+                .collect(Collectors.toMap(EntityField::getTableName, EntityField::getJavaType));
+            List<RepoTemplateData> repoTemplateData = Converter.convertRepo(config, tablePkTypeMap);
+            FileWriter.writeFileToDisk(config, new ArrayList<>(repoTemplateData), MvcLevel.REPO);
+        } catch (Exception e) {
+            log.error("生成Repo接口异常");
+            throw new GeneratorException(e);
+        }
     }
 
     @Override
-    public void generateRepo() throws TemplateException, IOException {
-        Map<String, List<OracleColumnInfo>> columnInfo = DbLoader.getColumnInfo(config);
-        List<EntityTemplateData> entityTemplateData = Converter.convertEntity(config, columnInfo);
-        Map<String, String> tablePkTypeMap = entityTemplateData.stream()
-            .map(EntityTemplateData::getFields)
-            .flatMap(Collection::stream)
-            .filter(entityField -> BooleanUtils.isTrue(entityField.getPkFlg()))
-            .collect(Collectors.toMap(EntityField::getTableName, EntityField::getJavaType));
-        List<RepoTemplateData> repoTemplateData = Converter.convertRepo(config, tablePkTypeMap);
-        FileWriter.writeFileToDisk(config, Collections.singletonList(repoTemplateData), MvcLevel.REPO);
+    public void generateService() {
+        try {
+            List<ServiceTemplateData> serviceTemplateData = Converter.convertService(config);
+            FileWriter.writeFileToDisk(config, new ArrayList<>(serviceTemplateData), MvcLevel.SERVICE);
+        } catch (Exception e) {
+            log.error("生成Service接口异常");
+            throw new GeneratorException(e);
+        }
     }
 
     @Override
-    public void generateService() throws TemplateException, IOException {
-        List<ServiceTemplateData> serviceTemplateData = Converter.convertService(config);
-        FileWriter.writeFileToDisk(config, Collections.singletonList(serviceTemplateData), MvcLevel.SERVICE);
+    public void generateServiceImpl() {
+        try {
+            List<ServiceImplTemplateData> serviceImplTemplateData = Converter.convertServiceImpl(config);
+            FileWriter.writeFileToDisk(config, new ArrayList<>(serviceImplTemplateData), MvcLevel.SERVICE_IMPL);
+        } catch (Exception e) {
+            log.error("生成ServiceImpl异常");
+            throw new GeneratorException(e);
+        }
     }
 
     @Override
-    public void generateServiceImpl() throws TemplateException, IOException {
-        List<ServiceImplTemplateData> serviceImplTemplateData = Converter.convertServiceImpl(config);
-        FileWriter.writeFileToDisk(config, Collections.singletonList(serviceImplTemplateData), MvcLevel.SERVICE_IMPL);
-    }
-
-    @Override
-    public void generateController() throws TemplateException, IOException {
-        List<ControllerTemplateData> controllerTemplateData = Converter.convertController(config);
-        FileWriter.writeFileToDisk(config, Collections.singletonList(controllerTemplateData), MvcLevel.CONTROLLER);
+    public void generateController() {
+        try {
+            List<ControllerTemplateData> controllerTemplateData = Converter.convertController(config);
+            FileWriter.writeFileToDisk(config, new ArrayList<>(controllerTemplateData), MvcLevel.CONTROLLER);
+        } catch (Exception e) {
+            log.error("生成Controller异常");
+            throw new GeneratorException(e);
+        }
     }
 }
