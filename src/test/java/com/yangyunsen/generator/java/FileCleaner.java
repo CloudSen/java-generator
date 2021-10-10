@@ -1,8 +1,5 @@
 package com.yangyunsen.generator.java;
 
-import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
-import org.apache.commons.lang3.SystemUtils;
-
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Files;
@@ -25,15 +22,21 @@ public interface FileCleaner {
     static void deleteFiles(Set<String> filePaths) {
         assertDoesNotThrow(() -> {
             for (String pathStr : filePaths) {
-                URI uri = SystemUtils.IS_OS_WINDOWS ?
-                    new URI("file:/" + CommonStatic.JAVA_PATH.replaceAll("\\\\", CommonStatic.SLASH) + pathStr)
-                    : new URI("file:" + CommonStatic.JAVA_PATH + pathStr);
+                URI uri = new URI("file:" + pathStr);
                 Path path = Paths.get(uri);
-                if (Files.isDirectory(path)) {
+                while (true) {
+                    Path parentPath = path.getParent();
+                    if (parentPath.endsWith("java")) {
+                        break;
+                    }
+                    path = parentPath;
+                }
+                if (Files.exists(path) && Files.isDirectory(path)) {
                     Files.walk(path)
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+                    System.out.println("删除目录和内容 => " + path);
                 }
             }
         });

@@ -8,7 +8,6 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcDriverPkgName;
 import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
-import com.yangyunsen.generator.java.common.model.statics.CommonStatic;
 import com.yangyunsen.generator.java.converter.model.ControllerTemplateData;
 import com.yangyunsen.generator.java.converter.model.EntityTemplateData;
 import com.yangyunsen.generator.java.converter.model.RepoTemplateData;
@@ -20,6 +19,7 @@ import com.yangyunsen.generator.java.converter.model.jpa.JpaEntityTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaRepoTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaServiceImplTemplateData;
 import com.yangyunsen.generator.java.util.GeneratorDateUtil;
+import com.yangyunsen.generator.java.util.GeneratorStringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
@@ -44,7 +44,7 @@ class FileWriterTest implements FileCleaner {
         .setPasswd("cquisse")
         .setDriverPkgName(JdbcDriverPkgName.ORACLE);
     private static final PackageInfo PACKAGE_INFO = new PackageInfo()
-        .setEntityPkgName("com.yangyunsen.generator.java.entity")
+        .setEntityPkgName("com.yangyunsen.generator.java.model.entity")
         .setControllerPkgName("com.yangyunsen.generator.java.controller")
         .setServicePkgName("com.yangyunsen.generator.java.service")
         .setServiceImplPkgName("com.yangyunsen.generator.java.service.impl")
@@ -84,9 +84,7 @@ class FileWriterTest implements FileCleaner {
                         new EntityField().setPkFlg(null).setDbName("AGE").setJavaName("age").setJavaType("Integer")
                     ))
             );
-            entityTemplateDataList.stream().map(EntityTemplateData::getPkgName)
-                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
-                .forEach(FILE_PATHS::add);
+            FILE_PATHS.add(GeneratorStringUtil.getPathStrByMvcLevel(PACKAGE_INFO, MvcLevel.ENTITY));
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(entityTemplateDataList), MvcLevel.ENTITY);
         });
     }
@@ -112,9 +110,7 @@ class FileWriterTest implements FileCleaner {
                     .setControllerUrl("test-generator2")
                     .setImportServicePkgName("com.yangyunsen.generator.java.service.TestGenerator2Service")
             );
-            ctrlTempDataList.stream().map(ControllerTemplateData::getPkgName)
-                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
-                .forEach(FILE_PATHS::add);
+            FILE_PATHS.add(GeneratorStringUtil.getPathStrByMvcLevel(PACKAGE_INFO, MvcLevel.CONTROLLER));
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(ctrlTempDataList), MvcLevel.CONTROLLER);
         });
     }
@@ -134,9 +130,7 @@ class FileWriterTest implements FileCleaner {
                     .setPkgName("com.yangyunsen.generator.java.service")
                     .setCreateDate(GeneratorDateUtil.getCommentDate())
             );
-            serviceTempDataList.stream().map(CommonServiceTemplateData::getPkgName)
-                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
-                .forEach(FILE_PATHS::add);
+            FILE_PATHS.add(GeneratorStringUtil.getPathStrByMvcLevel(PACKAGE_INFO, MvcLevel.SERVICE));
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(serviceTempDataList), MvcLevel.SERVICE);
         });
     }
@@ -164,9 +158,7 @@ class FileWriterTest implements FileCleaner {
                     .setRepoClassName("TestGenerator2Repository")
                     .setCreateDate(GeneratorDateUtil.getCommentDate())
             );
-            serviceTempDataList.stream().map(ServiceImplTemplateData::getPkgName)
-                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
-                .forEach(FILE_PATHS::add);
+            FILE_PATHS.add(GeneratorStringUtil.getPathStrByMvcLevel(PACKAGE_INFO, MvcLevel.SERVICE_IMPL));
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(serviceTempDataList), MvcLevel.SERVICE_IMPL);
         });
     }
@@ -194,16 +186,13 @@ class FileWriterTest implements FileCleaner {
                     .setEntityPkgName("com.yangyunsen.generator.java.model.entity.TestGenerator2Entity")
                     .setEntityClassName("TestGenerator2Entity")
             );
-            repoTempDataList.stream().map(RepoTemplateData::getPkgName)
-                .map(pkgName -> pkgName.replaceAll("\\.", CommonStatic.SLASH) + CommonStatic.SLASH)
-                .forEach(FILE_PATHS::add);
+            FILE_PATHS.add(GeneratorStringUtil.getPathStrByMvcLevel(PACKAGE_INFO, MvcLevel.REPO));
             FileWriter.writeFileToDisk(GENERATOR_CONFIG, new ArrayList<>(repoTempDataList), MvcLevel.REPO);
         });
     }
 
     @AfterAll
     static void cleanResource() {
-        FILE_PATHS.forEach(path -> log.info("删除目录和内容: {}", path));
         FileCleaner.deleteFiles(FILE_PATHS);
     }
 }

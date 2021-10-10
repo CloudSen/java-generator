@@ -33,7 +33,7 @@ class GeneratorTest implements FileCleaner {
         .setDriverPkgName(JdbcDriverPkgName.ORACLE);
 
     private static final PackageInfo PACKAGE_INFO = new PackageInfo()
-        .setEntityPkgName("com.yangyunsen.generator.java.entity")
+        .setEntityPkgName("com.yangyunsen.generator.java.model.entity")
         .setRepoPkgName("com.yangyunsen.generator.java.repository")
         .setServicePkgName("com.yangyunsen.generator.java.service")
         .setServiceImplPkgName("com.yangyunsen.generator.java.service.impl")
@@ -49,7 +49,6 @@ class GeneratorTest implements FileCleaner {
 
     @AfterAll
     static void cleanResource() {
-        FILE_PATHS.forEach(path -> log.info("删除目录和内容: {}", path));
         FileCleaner.deleteFiles(FILE_PATHS);
     }
 
