@@ -3,7 +3,6 @@ package com.yangyunsen.generator.java.common;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
@@ -12,7 +11,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @author clouds3n
  * @date 2021-09-23
  */
-@Slf4j
 public class FreeMarkerManager {
 
     private FreeMarkerManager() {
@@ -34,7 +32,7 @@ public class FreeMarkerManager {
                 FREE_MARKER_CONFIG.setWrapUncheckedExceptions(true);
                 FREE_MARKER_CONFIG.setFallbackOnNullLoopVariable(false);
             } catch (Exception e) {
-                log.error(ExceptionUtils.getStackTrace(e));
+                System.out.println(ExceptionUtils.getStackTrace(e));
             }
         }
     }

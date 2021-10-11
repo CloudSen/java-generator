@@ -20,7 +20,6 @@ import com.yangyunsen.generator.java.converter.model.jpa.JpaRepoTemplateData;
 import com.yangyunsen.generator.java.converter.model.jpa.JpaServiceImplTemplateData;
 import com.yangyunsen.generator.java.util.GeneratorDateUtil;
 import com.yangyunsen.generator.java.util.GeneratorStringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
@@ -33,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
  * @author CloudS3n
  * @date 2021-09-30 14:25
  */
-@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FileWriterTest implements FileCleaner {
 

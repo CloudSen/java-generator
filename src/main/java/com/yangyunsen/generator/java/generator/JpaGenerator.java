@@ -11,10 +11,12 @@ import com.yangyunsen.generator.java.dbloader.DbLoader;
 import com.yangyunsen.generator.java.dbloader.oracle.OracleColumnInfo;
 import com.yangyunsen.generator.java.filewriter.FileWriter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +25,6 @@ import java.util.stream.Collectors;
  * @author clouds3n
  * @date 2021-09-29
  */
-@Slf4j
 @RequiredArgsConstructor
 public class JpaGenerator implements Generator {
 
@@ -66,7 +67,7 @@ public class JpaGenerator implements Generator {
             List<EntityTemplateData> entityTemplateData = Converter.convertEntity(config, columnInfo);
             FileWriter.writeFileToDisk(config, new ArrayList<>(entityTemplateData), MvcLevel.ENTITY);
         } catch (Exception e) {
-            log.error("生成ORM实体异常");
+            System.out.println("生成ORM实体异常");
             throw new GeneratorException(e);
         }
     }
@@ -84,7 +85,7 @@ public class JpaGenerator implements Generator {
             List<RepoTemplateData> repoTemplateData = Converter.convertRepo(config, tablePkTypeMap);
             FileWriter.writeFileToDisk(config, new ArrayList<>(repoTemplateData), MvcLevel.REPO);
         } catch (Exception e) {
-            log.error("生成Repo接口异常");
+            System.out.println("生成Repo接口异常");
             throw new GeneratorException(e);
         }
     }
@@ -95,7 +96,7 @@ public class JpaGenerator implements Generator {
             List<ServiceTemplateData> serviceTemplateData = Converter.convertService(config);
             FileWriter.writeFileToDisk(config, new ArrayList<>(serviceTemplateData), MvcLevel.SERVICE);
         } catch (Exception e) {
-            log.error("生成Service接口异常");
+            System.out.println("生成Service接口异常");
             throw new GeneratorException(e);
         }
     }
@@ -106,7 +107,7 @@ public class JpaGenerator implements Generator {
             List<ServiceImplTemplateData> serviceImplTemplateData = Converter.convertServiceImpl(config);
             FileWriter.writeFileToDisk(config, new ArrayList<>(serviceImplTemplateData), MvcLevel.SERVICE_IMPL);
         } catch (Exception e) {
-            log.error("生成ServiceImpl异常");
+            System.out.println("生成ServiceImpl异常");
             throw new GeneratorException(e);
         }
     }
@@ -117,7 +118,7 @@ public class JpaGenerator implements Generator {
             List<ControllerTemplateData> controllerTemplateData = Converter.convertController(config);
             FileWriter.writeFileToDisk(config, new ArrayList<>(controllerTemplateData), MvcLevel.CONTROLLER);
         } catch (Exception e) {
-            log.error("生成Controller异常");
+            System.out.println("生成Controller异常");
             throw new GeneratorException(e);
         }
     }

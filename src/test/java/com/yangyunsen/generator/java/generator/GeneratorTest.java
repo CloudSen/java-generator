@@ -9,7 +9,6 @@ import com.yangyunsen.generator.java.common.model.enums.JdbcUrlPrefix;
 import com.yangyunsen.generator.java.common.model.enums.Mode;
 import com.yangyunsen.generator.java.common.model.enums.MvcLevel;
 import com.yangyunsen.generator.java.util.GeneratorStringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ import java.util.Set;
  * @author clouds3n
  * @date 2021-10-10
  */
-@Slf4j
 class GeneratorTest implements FileCleaner {
 
     private static final Set<String> FILE_PATHS = new HashSet<>();
