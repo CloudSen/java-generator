@@ -21,7 +21,7 @@ public class FreeMarkerManager {
     }
 
     private static class InstanceHolder {
-        private static final Configuration FREE_MARKER_CONFIG = new Configuration(Configuration.VERSION_2_3_31);
+        private static final Configuration FREE_MARKER_CONFIG = new Configuration(Configuration.VERSION_2_3_30);
         static {
             try {
                 FREE_MARKER_CONFIG.setClassForTemplateLoading(FreeMarkerManager.class, "/templates");
