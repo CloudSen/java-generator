@@ -140,6 +140,10 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${mvn.surefire.version}</version>
       </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
