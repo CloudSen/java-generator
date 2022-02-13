@@ -25,7 +25,7 @@ class GeneratorTest implements FileCleaner {
     private static final Set<String> FILE_PATHS = new HashSet<>();
 
     private static final DatabaseInfo DATABASE_INFO = new DatabaseInfo()
-        .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+        .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
         .setUsername("CQDX_JXGLXX")
         .setPasswd("cquisse")
         .setDriverPkgName(JdbcDriverPkgName.ORACLE);

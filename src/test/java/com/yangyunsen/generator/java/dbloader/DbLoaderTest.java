@@ -29,7 +29,7 @@ class DbLoaderTest {
     void loadNotSupportedDb() {
         Assertions.assertThrows(GeneratorException.class, () -> {
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.POSTGRE_SQL);
@@ -51,7 +51,7 @@ class DbLoaderTest {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     void getOneTableColumnInfo() {
         DatabaseInfo databaseInfo = new DatabaseInfo()
-            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);
@@ -79,7 +79,7 @@ class DbLoaderTest {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     void getMultiTableColumnInfo() {
         DatabaseInfo databaseInfo = new DatabaseInfo()
-            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+            .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
             .setUsername("CQDX_JXGLXX")
             .setPasswd("cquisse")
             .setDriverPkgName(JdbcDriverPkgName.ORACLE);

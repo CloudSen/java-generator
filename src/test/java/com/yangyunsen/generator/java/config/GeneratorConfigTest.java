@@ -32,7 +32,7 @@ public class GeneratorConfigTest {
         assertDoesNotThrow(() -> {
             PackageInfo packageInfo = new PackageInfo().setEntityPkgName("com.yangyunsen.generator.java.entity");
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
@@ -54,7 +54,7 @@ public class GeneratorConfigTest {
         assertDoesNotThrow(() -> {
             PackageInfo packageInfo = new PackageInfo().setEntityPkgName("com.yangyunsen.generator.java.entity");
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
@@ -76,7 +76,7 @@ public class GeneratorConfigTest {
         assertThrows(GeneratorException.class, () -> {
             PackageInfo packageInfo = new PackageInfo().setEntityPkgName("com.yangyunsen.generator.java.entity");
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
@@ -97,7 +97,7 @@ public class GeneratorConfigTest {
         assertDoesNotThrow(() -> {
             PackageInfo packageInfo = new PackageInfo().setEntityPkgName("com.yangyunsen.generator.java.entity");
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);

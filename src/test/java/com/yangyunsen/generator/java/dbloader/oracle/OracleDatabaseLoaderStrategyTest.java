@@ -28,14 +28,14 @@ class OracleDatabaseLoaderStrategyTest {
     void getJdbcConnect() {
         Assertions.assertDoesNotThrow(() -> {
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
             DatabaseLoaderStrategy databaseLoaderStrategy = new OracleDatabaseLoaderStrategy(databaseInfo);
             Connection connection = databaseLoaderStrategy.getJdbcConnection(databaseInfo);
             Assertions.assertNotNull(connection);
-            Assertions.assertEquals(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl", connection.getMetaData().getURL());
+            Assertions.assertEquals(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl", connection.getMetaData().getURL());
             Assertions.assertEquals("CQDX_JXGLXX", connection.getMetaData().getUserName());
         });
     }
@@ -46,7 +46,7 @@ class OracleDatabaseLoaderStrategyTest {
     void getOneTableInfo() {
         Assertions.assertDoesNotThrow(() -> {
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
@@ -66,7 +66,7 @@ class OracleDatabaseLoaderStrategyTest {
     void getMultiTableInfo() {
         Assertions.assertDoesNotThrow(() -> {
             DatabaseInfo databaseInfo = new DatabaseInfo()
-                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "172.20.254.14:1521:orcl")
+                .setUrl(JdbcUrlPrefix.ORACLE.getPrefix() + "192.168.2.145:1521:orcl")
                 .setUsername("CQDX_JXGLXX")
                 .setPasswd("cquisse")
                 .setDriverPkgName(JdbcDriverPkgName.ORACLE);
